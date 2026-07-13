@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  SMASHDLE — arcade / fighting-game HUD theme                        */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Chakra Petch', 'Hanken Grotesk', sans-serif;
+}
+
+:root {
+  --background: #0d0e13;
+  --foreground: #f4f1ea;
+  --card: #15161d;
+  --card-foreground: #f4f1ea;
+  --popover: #14151c;
+  --popover-foreground: #f4f1ea;
+  --primary: #ff5a1f;
+  --primary-foreground: #170a03;
+  --secondary: #1c1e28;
+  --secondary-foreground: #f4f1ea;
+  --muted: #191b23;
+  --muted-foreground: #9b968a;
+  --accent: #ffc21f;
+  --accent-foreground: #170f03;
+  --destructive: #f04438;
+  --destructive-foreground: #fff7f5;
+  --border: #262835;
+  --input: #2b2d3a;
+  --ring: #ff5a1f;
+  --radius: 0.85rem;
+  --correct: #2fbf71;
+  --correct-foreground: #04140b;
+  --partial: #f4b740;
+  --partial-foreground: #1b1204;
+  --absent: #2f3040;
+  --absent-foreground: #d7d3c8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-correct: var(--correct);
+  --color-correct-foreground: var(--correct-foreground);
+  --color-partial: var(--partial);
+  --color-partial-foreground: var(--partial-foreground);
+  --color-absent: var(--absent);
+  --color-absent-foreground: var(--absent-foreground);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-sm: calc(var(--radius) - 0.4rem);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60rem 40rem at 50% -8%, rgba(255, 90, 31, 0.16), transparent 60%),
+    radial-gradient(40rem 30rem at 92% 8%, rgba(255, 194, 31, 0.08), transparent 55%),
+    radial-gradient(50rem 40rem at 4% 100%, rgba(80, 120, 255, 0.06), transparent 55%),
+    var(--background);
+}
+.app-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 78%);
+}
+
+.hud-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent),
+    var(--card);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 20px 40px -24px rgba(0, 0, 0, 0.8);
+}
+.text-glow {
+  text-shadow: 0 0 24px rgba(255, 90, 31, 0.45);
+}
+
+@keyframes tile-in {
+  from { opacity: 0; transform: rotateX(-90deg); }
+  to { opacity: 1; transform: rotateX(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  60% { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes content-in {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.tile-reveal {
+  transform-origin: center;
+  backface-visibility: hidden;
+  animation: tile-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.animate-pop-in {
+  animation: pop-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.dialog-overlay[data-state='open'] {
+  animation: overlay-in 0.2s ease both;
+}
+.dialog-content[data-state='open'] {
+  animation: content-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile-reveal,
+  .animate-fade-up,
+  .animate-pop-in,
+  .dialog-overlay,
+  .dialog-content {
+    animation: none !important;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
