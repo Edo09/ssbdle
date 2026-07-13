@@ -2,6 +2,7 @@ import {
   BrainCircuit,
   Flame,
   Infinity as InfinityIcon,
+  Languages,
   LogOut,
   Swords,
   Trophy,
@@ -10,13 +11,14 @@ import {
 import type { Mode } from '@/types/game'
 import { displayName, useAuthStore } from '@/store/useAuthStore'
 import { useGameStore } from '@/store/useGameStore'
+import { useI18n } from '@/i18n/useI18n'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const MODES: { id: Mode; label: string; icon: typeof Flame }[] = [
-  { id: 'daily', label: 'Daily', icon: Flame },
-  { id: 'arcade', label: 'Arcade', icon: InfinityIcon },
-  { id: 'trivia', label: 'Trivia', icon: BrainCircuit },
+const MODES: { id: Mode; icon: typeof Flame }[] = [
+  { id: 'daily', icon: Flame },
+  { id: 'arcade', icon: InfinityIcon },
+  { id: 'trivia', icon: BrainCircuit },
 ]
 
 interface Props {
@@ -32,6 +34,7 @@ export function Header({
   onOpenAuth,
   onOpenLeaderboard,
 }: Props) {
+  const { t, lang, setLang } = useI18n()
   const user = useAuthStore((s) => s.user)
   const signOut = useAuthStore((s) => s.signOut)
   const serverStats = useGameStore((s) => s.serverStats)
@@ -43,20 +46,20 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
-        <a href="/" className="group flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-[0_6px_18px_-6px_var(--primary)]">
-            <Swords className="size-5" />
+      <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
+        <a href="/" className="group flex shrink-0 items-center gap-2">
+          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-[0_6px_18px_-6px_var(--primary)] sm:size-9">
+            <Swords className="size-4 sm:size-5" />
           </span>
-          <span className="font-display text-xl font-bold tracking-tight text-glow">
+          <span className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
             SMASH<span className="text-primary">DLE</span>
           </span>
         </a>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <div
-            className="flex items-center gap-1 rounded-lg border border-border bg-secondary/40 px-2.5 py-1.5"
-            title="Current daily streak"
+            className="flex items-center gap-1 rounded-lg border border-border bg-secondary/40 px-2 py-1.5"
+            title={t('header.streakTitle')}
           >
             <Flame
               className={cn(
@@ -72,8 +75,18 @@ export function Header({
           <Button
             variant="secondary"
             size="icon"
+            onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+            aria-label={t('header.switchLanguage')}
+            title={t('header.switchLanguage')}
+          >
+            <Languages />
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="icon"
             onClick={onOpenLeaderboard}
-            aria-label="Open leaderboards"
+            aria-label={t('header.leaderboards')}
           >
             <Trophy />
           </Button>
@@ -87,22 +100,23 @@ export function Header({
                 variant="ghost"
                 size="icon"
                 onClick={() => signOut()}
-                aria-label="Sign out"
+                aria-label={t('common.signOut')}
               >
                 <LogOut />
               </Button>
             </div>
           ) : (
-            <Button size="sm" onClick={onOpenAuth}>
-              <UserIcon /> Sign in
+            <Button size="sm" onClick={onOpenAuth} aria-label={t('common.signIn')}>
+              <UserIcon />
+              <span className="hidden sm:inline">{t('common.signIn')}</span>
             </Button>
           )}
         </div>
       </div>
 
-      <nav className="mx-auto max-w-3xl px-4 pb-3">
+      <nav className="mx-auto max-w-4xl px-3 pb-2.5 sm:px-4 sm:pb-3">
         <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-border bg-secondary/30 p-1.5">
-          {MODES.map(({ id, label, icon: Icon }) => (
+          {MODES.map(({ id, icon: Icon }) => (
             <button
               key={id}
               type="button"
@@ -116,7 +130,7 @@ export function Header({
               )}
             >
               <Icon className="size-4" />
-              {label}
+              {t('header.' + id)}
             </button>
           ))}
         </div>

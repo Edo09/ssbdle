@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { Infinity as InfinityIcon } from 'lucide-react'
 import { useGameStore } from '@/store/useGameStore'
+import { useI18n } from '@/i18n/useI18n'
 import { GuessBoard } from '@/components/game/GuessBoard'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function ArcadeMode() {
+  const { t } = useI18n()
   const characters = useGameStore((s) => s.characters)
   const arcade = useGameStore((s) => s.arcade)
   const roundId = useGameStore((s) => s.arcadeRoundId)
@@ -14,18 +16,17 @@ export function ArcadeMode() {
   const submitGuess = useGameStore((s) => s.submitArcadeGuess)
   const giveUp = useGameStore((s) => s.giveUpArcade)
 
-  // Kick off the first round when entering the mode.
   useEffect(() => {
     if (!roundId && !starting) startArcade()
   }, [roundId, starting, startArcade])
 
   return (
-    <section aria-label="Arcade mode">
+    <section aria-label={t('header.arcade')}>
       <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
         <InfinityIcon className="size-4 text-primary" />
         <span>
-          Endless mode · a{' '}
-          <span className="text-foreground">random fighter</span> every round
+          {t('arcade.label')} ·{' '}
+          <span className="text-foreground">{t('arcade.tagline')}</span>
         </span>
       </div>
 

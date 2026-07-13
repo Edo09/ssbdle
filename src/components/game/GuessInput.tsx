@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { Search } from 'lucide-react'
 import type { Character } from '@/types/game'
+import { useI18n } from '@/i18n/useI18n'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
 import { cn } from '@/lib/utils'
 
@@ -26,8 +27,9 @@ export function GuessInput({
   excludeIds,
   onGuess,
   disabled,
-  placeholder = 'Guess a fighter…',
+  placeholder,
 }: Props) {
+  const { t } = useI18n()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
@@ -99,7 +101,7 @@ export function GuessInput({
           spellCheck={false}
           disabled={disabled}
           value={query}
-          placeholder={placeholder}
+          placeholder={placeholder ?? t('board.placeholder')}
           onChange={(e) => {
             setQuery(e.target.value)
             setOpen(true)

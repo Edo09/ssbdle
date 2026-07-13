@@ -2,9 +2,11 @@ import { useMemo } from 'react'
 import { Flag, Loader2 } from 'lucide-react'
 import type { BoardStatus } from '@/store/useGameStore'
 import type { Character, GuessResult, Mode } from '@/types/game'
+import { useI18n } from '@/i18n/useI18n'
 import { Button } from '@/components/ui/button'
 import { GuessInput } from '@/components/game/GuessInput'
 import { GuessGrid } from '@/components/game/GuessGrid'
+import { Legend } from '@/components/game/Legend'
 import { ResultBanner } from '@/components/game/ResultBanner'
 
 interface Props {
@@ -34,6 +36,7 @@ export function GuessBoard({
   onGiveUp,
   onPlayAgain,
 }: Props) {
+  const { t } = useI18n()
   const excludeIds = useMemo(
     () => new Set(guesses.map((g) => g.guess.id)),
     [guesses],
@@ -67,14 +70,14 @@ export function GuessBoard({
                   <span className="font-display font-semibold text-foreground">
                     {remaining}
                   </span>{' '}
-                  {remaining === 1 ? 'guess' : 'guesses'} left
+                  {t(remaining === 1 ? 'board.leftOne' : 'board.leftMany')}
                 </>
               ) : (
                 <>
                   <span className="font-display font-semibold text-foreground">
                     {guesses.length}
                   </span>{' '}
-                  {guesses.length === 1 ? 'guess' : 'guesses'}
+                  {t(guesses.length === 1 ? 'board.countOne' : 'board.countMany')}
                 </>
               )}
             </span>
@@ -85,7 +88,7 @@ export function GuessBoard({
                 size="sm"
                 className="text-muted-foreground"
               >
-                <Flag /> Give up
+                <Flag /> {t('common.giveUp')}
               </Button>
             )}
           </div>
@@ -95,6 +98,8 @@ export function GuessBoard({
       <div className="mt-4">
         <GuessGrid guesses={guesses} />
       </div>
+
+      {guesses.length > 0 && <Legend />}
 
       {!playing && (
         <ResultBanner

@@ -3,6 +3,8 @@ import { toast } from 'sonner'
 import { PartyPopper, RotateCcw, Share2, Skull } from 'lucide-react'
 import type { Character, GuessResult, Mode } from '@/types/game'
 import { MAX_GUESSES } from '@/types/game'
+import { useI18n, type TFn } from '@/i18n/useI18n'
+import { VISIBLE_ATTRIBUTE_KEY_SET } from '@/lib/columns'
 import { Button } from '@/components/ui/button'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
 import {
@@ -11,7 +13,12 @@ import {
   todayUTC,
 } from '@/lib/date'
 
-function buildShare(guesses: GuessResult[], mode: Mode, solved: boolean): string {
+function buildShare(
+  guesses: GuessResult[],
+  mode: Mode,
+  solved: boolean,
+  t: TFn,
+): string {
   const header =
     mode === 'daily' ? `SMASHDLE ${todayUTC()}` : 'SMASHDLE • Arcade'
   const score =
@@ -20,14 +27,17 @@ function buildShare(guesses: GuessResult[], mode: Mode, solved: boolean): string
         ? `${guesses.length}/${MAX_GUESSES}`
         : `X/${MAX_GUESSES}`
       : solved
-        ? `solved in ${guesses.length}`
-        : 'gave up'
+        ? t('result.shareSolvedIn', { n: guesses.length })
+        : t('result.shareGaveUp')
   const grid = guesses
     .map((g) =>
-      g.attributes.map((a) => (a.status === 'correct' ? '🟩' : '⬛')).join(''),
+      g.attributes
+        .filter((a) => VISIBLE_ATTRIBUTE_KEY_SET.has(a.key))
+        .map((a) => (a.status === 'correct' ? '🟩' : a.status === 'partial' ? '🟨' : '⬛'))
+        .join(''),
     )
     .join('\n')
-  return `${header} ${score}\n${grid}\n\nplay at smashdle`
+  return `${header} ${score}\n${grid}\n\n${t('result.shareFooter')}`
 }
 
 function Countdown() {
@@ -58,15 +68,16 @@ export function ResultBanner({
   mode,
   onPlayAgain,
 }: Props) {
+  const { t } = useI18n()
   const won = status === 'won'
 
   async function share() {
-    const text = buildShare(guesses, mode, won)
+    const text = buildShare(guesses, mode, won, t)
     try {
       await navigator.clipboard.writeText(text)
-      toast.success('Result copied to clipboard')
+      toast.success(t('result.shareCopied'))
     } catch {
-      toast.error('Could not copy result')
+      toast.error(t('result.shareFailed'))
     }
   }
 
@@ -79,7 +90,7 @@ export function ResultBanner({
           <Skull className="size-5 text-muted-foreground" />
         )}
         <h3 className="font-display text-lg font-bold">
-          {won ? 'Nailed it!' : 'Out of guesses'}
+          {won ? t('result.won') : t('result.lost')}
         </h3>
       </div>
 
@@ -93,7 +104,7 @@ export function ResultBanner({
           />
           <div className="leading-tight">
             <div className="text-xs uppercase tracking-wide text-muted-foreground">
-              {won ? 'You guessed' : 'The fighter was'}
+              {won ? t('result.youGuessed') : t('result.theFighterWas')}
             </div>
             <div className="font-display text-xl font-bold">{answer.name}</div>
             <div className="text-sm text-muted-foreground">
@@ -103,22 +114,22 @@ export function ResultBanner({
         </div>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground">
-          Sign in to reveal the fighter and save your streak.
+          {t('result.signInReveal')}
         </p>
       )}
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <Button onClick={share} variant="secondary" size="sm">
-          <Share2 /> Share
+          <Share2 /> {t('common.share')}
         </Button>
         {mode === 'arcade' && onPlayAgain && (
           <Button onClick={onPlayAgain} size="sm">
-            <RotateCcw /> Play again
+            <RotateCcw /> {t('common.playAgain')}
           </Button>
         )}
         {mode === 'daily' && (
           <span className="ml-auto text-sm text-muted-foreground">
-            Next fighter in <Countdown />
+            {t('result.nextIn')} <Countdown />
           </span>
         )}
       </div>

@@ -11,6 +11,7 @@ import type {
   TriviaLeaderRow,
 } from '@/types/game'
 import { displayName, useAuthStore } from '@/store/useAuthStore'
+import { useI18n } from '@/i18n/useI18n'
 import {
   Dialog,
   DialogContent,
@@ -48,14 +49,6 @@ function RankBadge({ rank }: { rank: number }) {
   )
 }
 
-function Empty() {
-  return (
-    <p className="py-10 text-center text-sm text-muted-foreground">
-      No players yet — be the first on the board.
-    </p>
-  )
-}
-
 function LoadingRows() {
   return (
     <div className="space-y-2 py-2">
@@ -70,24 +63,28 @@ function Row({
   rank,
   name,
   me,
+  meLabel,
   cells,
 }: {
   rank: number
   name: string
   me: boolean
+  meLabel: string
   cells: { label: string; value: string | number }[]
 }) {
   return (
     <div
       className={cn(
         'flex items-center gap-3 rounded-lg border px-3 py-2',
-        me ? 'border-primary/50 bg-primary/10' : 'border-transparent bg-secondary/30',
+        me
+          ? 'border-primary/50 bg-primary/10'
+          : 'border-transparent bg-secondary/30',
       )}
     >
       <RankBadge rank={rank} />
       <span className="flex-1 truncate font-semibold">
         {name}
-        {me && <span className="ml-1.5 text-xs text-primary">you</span>}
+        {me && <span className="ml-1.5 text-xs text-primary">{meLabel}</span>}
       </span>
       {cells.map((c) => (
         <span key={c.label} className="w-14 text-right font-display text-sm">
@@ -99,6 +96,7 @@ function Row({
 }
 
 export function LeaderboardDialog({ open, onOpenChange }: Props) {
+  const { t } = useI18n()
   const user = useAuthStore((s) => s.user)
   const me = displayName(user)
 
@@ -127,24 +125,31 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
     }
   }, [open])
 
+  const empty = (
+    <p className="py-10 text-center text-sm text-muted-foreground">
+      {t('leaderboard.empty')}
+    </p>
+  )
+  const meLabel = t('common.you')
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Trophy className="size-5 text-accent" />
-            <DialogTitle>Leaderboards</DialogTitle>
+            <DialogTitle>{t('leaderboard.title')}</DialogTitle>
           </div>
-          <DialogDescription>Registered players, ranked by mode.</DialogDescription>
+          <DialogDescription>{t('leaderboard.subtitle')}</DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="daily">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="daily">
-              <Flame className="size-4" /> Daily
+              <Flame className="size-4" /> {t('header.daily')}
             </TabsTrigger>
-            <TabsTrigger value="arcade">Arcade</TabsTrigger>
-            <TabsTrigger value="trivia">Trivia</TabsTrigger>
+            <TabsTrigger value="arcade">{t('header.arcade')}</TabsTrigger>
+            <TabsTrigger value="trivia">{t('header.trivia')}</TabsTrigger>
           </TabsList>
 
           <div className="mt-3 max-h-[52vh] overflow-y-auto pr-1">
@@ -152,7 +157,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
               {loading ? (
                 <LoadingRows />
               ) : daily.length === 0 ? (
-                <Empty />
+                empty
               ) : (
                 daily.map((r) => (
                   <Row
@@ -160,6 +165,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     rank={r.rank}
                     name={r.username}
                     me={r.username === me}
+                    meLabel={meLabel}
                     cells={[
                       { label: 'streak', value: r.current_streak },
                       { label: 'best', value: r.best_streak },
@@ -174,7 +180,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
               {loading ? (
                 <LoadingRows />
               ) : arcade.length === 0 ? (
-                <Empty />
+                empty
               ) : (
                 arcade.map((r) => (
                   <Row
@@ -182,6 +188,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     rank={r.rank}
                     name={r.username}
                     me={r.username === me}
+                    meLabel={meLabel}
                     cells={[
                       { label: 'wins', value: r.wins },
                       { label: 'best', value: r.best_guesses ?? '—' },
@@ -195,7 +202,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
               {loading ? (
                 <LoadingRows />
               ) : trivia.length === 0 ? (
-                <Empty />
+                empty
               ) : (
                 trivia.map((r) => (
                   <Row
@@ -203,9 +210,13 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     rank={r.rank}
                     name={r.username}
                     me={r.username === me}
+                    meLabel={meLabel}
                     cells={[
                       { label: 'correct', value: r.correct },
-                      { label: 'acc', value: r.accuracy_pct != null ? `${r.accuracy_pct}%` : '—' },
+                      {
+                        label: 'acc',
+                        value: r.accuracy_pct != null ? `${r.accuracy_pct}%` : '—',
+                      },
                     ]}
                   />
                 ))

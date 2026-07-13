@@ -1,11 +1,13 @@
 import { CalendarDays } from 'lucide-react'
 import { useGameStore } from '@/store/useGameStore'
 import { MAX_GUESSES } from '@/types/game'
+import { useI18n } from '@/i18n/useI18n'
 import { GuessBoard } from '@/components/game/GuessBoard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { todayUTC } from '@/lib/date'
 
 export function DailyMode() {
+  const { t, lang } = useI18n()
   const characters = useGameStore((s) => s.characters)
   const loadingChars = useGameStore((s) => s.loadingChars)
   const daily = useGameStore((s) => s.daily)
@@ -14,16 +16,16 @@ export function DailyMode() {
   const giveUp = useGameStore((s) => s.giveUpDaily)
 
   const prettyDate = new Date(todayUTC() + 'T00:00:00Z').toLocaleDateString(
-    undefined,
+    lang === 'es' ? 'es-ES' : 'en-US',
     { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' },
   )
 
   return (
-    <section aria-label="Daily puzzle">
+    <section aria-label={t('header.daily')}>
       <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
         <CalendarDays className="size-4 text-primary" />
         <span>
-          Daily fighter ·{' '}
+          {t('daily.label')} ·{' '}
           <span className="text-foreground">{prettyDate}</span>
         </span>
       </div>

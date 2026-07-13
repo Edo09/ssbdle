@@ -28,7 +28,7 @@ export type Character = z.infer<typeof CharacterSchema>
 
 /* --------------------------- Guess results ---------------------------- */
 
-export const AttrStatusSchema = z.enum(['correct', 'wrong'])
+export const AttrStatusSchema = z.enum(['correct', 'partial', 'wrong'])
 export type AttrStatus = z.infer<typeof AttrStatusSchema>
 
 export const DirectionSchema = z.enum(['up', 'down', 'equal'])

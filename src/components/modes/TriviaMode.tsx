@@ -5,6 +5,7 @@ import type { TriviaQuestion, TriviaResult } from '@/types/game'
 import { checkTriviaAnswer, getRandomTrivia } from '@/lib/api'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useGameStore } from '@/store/useGameStore'
+import { useI18n } from '@/i18n/useI18n'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,6 +14,7 @@ import { cn } from '@/lib/utils'
 type Option = { letter: string; text: string }
 
 export function TriviaMode() {
+  const { t } = useI18n()
   const [question, setQuestion] = useState<TriviaQuestion | null>(null)
   const [loading, setLoading] = useState(true)
   const [choice, setChoice] = useState<string | null>(null)
@@ -65,10 +67,10 @@ export function TriviaMode() {
     : []
 
   return (
-    <section aria-label="Trivia mode">
+    <section aria-label={t('trivia.aria')}>
       <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
         <BrainCircuit className="size-4 text-primary" />
-        <span>Trivia · test your Smash knowledge</span>
+        <span>{t('trivia.tagline')}</span>
       </div>
 
       {loading ? (
@@ -81,10 +83,11 @@ export function TriviaMode() {
         <p className="text-sm text-destructive">{error}</p>
       ) : !question ? (
         <div className="hud-panel rounded-xl p-6 text-center">
-          <p className="font-display text-lg">No trivia yet</p>
+          <p className="font-display text-lg">{t('trivia.noTrivia')}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Add questions to the <code className="text-foreground">trivia_questions</code>{' '}
-            table in Supabase and they'll show up here.
+            {t('trivia.noTriviaHintPre')}{' '}
+            <code className="text-foreground">trivia_questions</code>{' '}
+            {t('trivia.noTriviaHintPost')}
           </p>
         </div>
       ) : (
@@ -118,10 +121,14 @@ export function TriviaMode() {
                     'focus-visible:ring-2 focus-visible:ring-ring/50',
                     result == null &&
                       'border-border bg-secondary/40 hover:border-primary/50 hover:bg-secondary/70',
-                    result != null && isCorrect &&
+                    result != null &&
+                      isCorrect &&
                       'border-correct/50 bg-correct/20 text-foreground',
                     isChosenWrong && 'border-destructive/50 bg-destructive/15',
-                    result != null && !isCorrect && !isChosenWrong && 'opacity-60',
+                    result != null &&
+                      !isCorrect &&
+                      !isChosenWrong &&
+                      'opacity-60',
                   )}
                 >
                   <span
@@ -152,9 +159,9 @@ export function TriviaMode() {
             <div className="animate-fade-up mt-4 hud-panel rounded-xl p-4">
               <p className="font-display font-semibold">
                 {result.correct ? (
-                  <span className="text-correct">Correct!</span>
+                  <span className="text-correct">{t('trivia.correct')}</span>
                 ) : (
-                  <span className="text-destructive">Not quite.</span>
+                  <span className="text-destructive">{t('trivia.notQuite')}</span>
                 )}
               </p>
               {result.explanation && (
@@ -163,14 +170,14 @@ export function TriviaMode() {
                 </p>
               )}
               <Button onClick={load} size="sm" className="mt-3">
-                <RotateCcw /> Next question
+                <RotateCcw /> {t('trivia.nextQuestion')}
               </Button>
             </div>
           )}
 
           {!user && (
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Sign in to climb the trivia leaderboard.
+              {t('trivia.signInHint')}
             </p>
           )}
         </div>
