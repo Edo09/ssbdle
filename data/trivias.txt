@@ -356,3 +356,285 @@ INSERT INTO public.trivia_questions (question, option_a, option_b, option_c, opt
 
 -- 89. Sora
 ('Sora''s Neutral Special cycles strictly between which three spells?', 'Fire, Blizzard, Thunder', 'Firaga, Thundaga, Blizzaga', 'Aero, Cure, Stop', 'Gravity, Magnet, Reflect', 'B', 'SSBU - Sora', 'Medium', 'Sora cycles through the top-tier Kingdom Hearts spells in a fixed order: Firaga (multiple fireballs), Thundaga (three lightning strikes), and Blizzaga (freezing spread).');
+
+
+INSERT INTO public.trivia_questions (question, option_a, option_b, option_c, option_d, correct_option, category, difficulty, explanation) VALUES
+
+-- Game General & History
+(
+    'What was the primary marketing tagline used by Nintendo to announce the roster for Super Smash Bros. Ultimate?',
+    'A New Challenger Approaches',
+    'The Ultimate Battle',
+    'Everyone is Here!',
+    'Settle It In Smash',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    '"Everyone is Here!" was the massive E3 reveal indicating that every single fighter from the history of the franchise would be returning.'
+),
+(
+    'Not counting DLC or Echo Fighters, how many characters were technically available on the base roster screen to unlock?',
+    '64',
+    '69',
+    '74',
+    '89',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Medium',
+    'The base game featured 74 distinct fighters (counting Pokemon Trainer as one slot, and excluding Echo Fighters who share roster numbers).'
+),
+(
+    'How many characters are playable immediately when you boot up a brand new save file of Super Smash Bros. Ultimate?',
+    '8',
+    '12',
+    '14',
+    'The entire base roster',
+    'A',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    'Players start with the original 8 starting characters from the Nintendo 64 game: Mario, Donkey Kong, Link, Samus, Yoshi, Kirby, Fox, and Pikachu.'
+),
+(
+    'Who is the legendary game developer and creator who directed Super Smash Bros. Ultimate?',
+    'Shigeru Miyamoto',
+    'Masahiro Sakurai',
+    'Eiji Aonuma',
+    'Hideki Kamiya',
+    'B',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    'Masahiro Sakurai is the creator and director of the Super Smash Bros. series, famous for his incredible dedication and detailed "Mr. Sakurai Presents" broadcasts.'
+),
+(
+    'Who was the very last DLC character added to Super Smash Bros. Ultimate, completing the final roster?',
+    'Sephiroth',
+    'Byleth',
+    'Sora',
+    'Kazuya',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Medium',
+    'Sora from Kingdom Hearts was revealed in October 2021 as the final fighter of Fighters Pass Vol. 2, fulfilling the most requested fan vote of all time.'
+),
+(
+    'Super Smash Bros. Ultimate replaced the classic 3D collectible Trophies with what new 2D collectible system?',
+    'Stickers',
+    'Spirits',
+    'Badges',
+    'Cards',
+    'B',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    'Due to the massive development time required to model 3D trophies, the team replaced them with thousands of 2D "Spirits" that possess unique stat modifiers.'
+),
+(
+    'What is the title of the massive single-player RPG-lite adventure mode introduced in Ultimate?',
+    'The Subspace Emissary',
+    'Smash Tour',
+    'World of Light',
+    'Melee Adventure',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    'World of Light is the massive adventure mode where players navigate a huge map, fight spirit-possessed clones, and attempt to defeat the entity Galeem.'
+),
+(
+    'What is the name of the main vocal theme song for Super Smash Bros. Ultimate?',
+    'Jump Up, Super Star!',
+    'Edge of Dawn',
+    'Lifelight',
+    'Brawl Theme',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    '"Lifelight" is the sweeping main theme of Ultimate, featuring vocals in both English (sung by Abby Trott) and Japanese (sung by Erina Koga).'
+),
+(
+    'Which new multiplayer mode in Ultimate allows players to choose teams of 3 or 5 different fighters to battle in an elimination-style match?',
+    'Smashdown',
+    'Squad Strike',
+    'Tourney Mode',
+    'Special Smash',
+    'B',
+    'Super Smash Bros. Ultimate - General',
+    'Medium',
+    'Squad Strike brings a traditional fighting game "team battle" format (similar to King of Fighters) to Smash Bros, swapping characters between stocks.'
+),
+(
+    'What unique rule applies when playing the "Smashdown" mode in multiplayer?',
+    'Only downward attacks are allowed',
+    'Damage is tripled',
+    'Characters become locked and unplayable in future rounds after they are picked once',
+    'The stage slowly shrinks',
+    'C',
+    'Super Smash Bros. Ultimate - General',
+    'Medium',
+    'Smashdown forces roster diversity by crossing off characters from the selection screen once they have been picked in a previous round.'
+),
+(
+    'Ultimate allows every stage to be played in "Omega" and "Battlefield" forms. What do these forms do?',
+    'Normalize the stage layout to a completely flat or a three-platform layout',
+    'Turn the stage into an 8-player map',
+    'Apply a dark or bright visual filter to the stage',
+    'Randomize the stage hazard spawns',
+    'A',
+    'Super Smash Bros. Ultimate - General',
+    'Easy',
+    'Omega form makes any stage play strictly like Final Destination (flat), while Battlefield form gives any stage a standard three-platform layout.'
+),
+(
+    'A highly requested feature added in Ultimate allows players to turn off Stage Hazards. What does this do to the Mega Man stage "Wily Castle"?',
+    'Removes the platforms entirely',
+    'Removes the Yellow Devil boss that disrupts the fight',
+    'Makes the stage flat instead of floating',
+    'Locks the camera in place',
+    'B',
+    'Super Smash Bros. Ultimate - General',
+    'Medium',
+    'Turning off stage hazards removes stage-specific disruptions like bosses, scrolling screens, and damaging floors, making casual stages viable for competitive play.'
+),
+
+-- Frame Data & Mechanics
+(
+    'In Super Smash Bros. Ultimate, how many frames does the jumpsquat animation (the wind-up before leaving the ground) last?',
+    '3 frames for every character',
+    '5 frames for heavyweights, 3 for lightweights',
+    '1 frame',
+    'It depends on the character''s fall speed',
+    'A',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Medium',
+    'Unlike previous Smash games where jumpsquat varied wildly by character, Ultimate standardized it so every character takes exactly 3 frames to leave the ground.'
+),
+(
+    'Which of these characters is tied for having the fastest jab in the game, coming out on Frame 1?',
+    'Sonic',
+    'Little Mac',
+    'Sheik',
+    'Fox',
+    'B',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'Little Mac and Zero Suit Samus both boast extremely fast Frame 1 jabs, making them excellent "get off me" tools for escaping shield pressure.'
+),
+(
+    'How many frames does it standardly take to drop your shield (Shield Drop lag) in Ultimate if you do not input an attack?',
+    '7 frames',
+    '11 frames',
+    '15 frames',
+    '3 frames',
+    'B',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'Dropping shield takes 11 frames of vulnerability. This is why attacking out of shield (with an aerial or Up-B) is often preferred, as jumping bypasses shield drop lag.'
+),
+(
+    'In Ultimate, the "Perfect Shield" (or Parry) mechanic was changed from Smash 4. How is it executed?',
+    'By pressing shield exactly 3 frames before an attack hits',
+    'By releasing the shield button exactly as an attack connects',
+    'By pressing the attack and shield buttons together',
+    'By dodging into the attack',
+    'B',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Medium',
+    'Ultimate changed perfect shielding to a release-timing mechanic. Releasing shield within a 5-frame window of an attack connecting triggers a parry, granting severe frame advantage.'
+),
+(
+    'What happens to your frame data when you perform a directional air dodge compared to a neutral air dodge?',
+    'It has less landing lag',
+    'It grants significantly more invincibility frames',
+    'It has significantly more total duration and landing lag',
+    'They have the exact same frame data',
+    'C',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Medium',
+    'Directional air dodges are great for movement and recovery, but they suffer from massive landing lag and vulnerability compared to standard neutral air dodges.'
+),
+(
+    'Super Smash Bros. Ultimate runs at 60 frames per second. Approximately how long in real time is exactly one frame of action?',
+    '16.67 milliseconds',
+    '33.33 milliseconds',
+    '10.00 milliseconds',
+    '8.33 milliseconds',
+    'A',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'Running at 60 FPS means each individual frame of animation or input window lasts for 1/60th of a second, which equals 16.67 milliseconds.'
+),
+(
+    'Super Smash Bros. Ultimate introduced a macro to guarantee a short hop aerial attack. How is it performed?',
+    'By lightly flicking the C-stick',
+    'By holding the shield button while pressing jump',
+    'By pressing the jump button and the attack button simultaneously',
+    'By double-tapping the attack button',
+    'C',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Easy',
+    'Pressing jump and attack (A) at the same time guarantees a short hop aerial, lowering the technical execution barrier from previous games.'
+),
+(
+    'When utilizing a short hop aerial (either manually or via the macro), what happens to the damage of the attack?',
+    'It deals standard damage',
+    'It receives a 15% damage reduction (0.85x multiplier)',
+    'It receives a 10% damage increase',
+    'It deals half damage',
+    'B',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'To balance the speed and safety of short hop attacks, all short hop aerials in Ultimate have a 0.85x damage multiplier applied to them compared to full hop aerials.'
+),
+(
+    'What unique frame data mechanic was added to Spot Dodging in Super Smash Bros. Ultimate?',
+    'Spot dodges can reflect projectiles',
+    'Spot dodging heals you for 1%',
+    'You can cancel the ending lag of a spot dodge directly into an attack',
+    'Spot dodges travel slightly backwards',
+    'C',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'Ultimate introduced the ability to cancel the later vulnerability frames of a spot dodge directly into an attack (like a jab or smash), rewarding aggressive defense.'
+),
+(
+    'If an attack is mathematically described on frame data websites as being "-2 on shield", what does this mean?',
+    'The attacker takes 2% recoil damage',
+    'The attack shrinks the shield by 2 size units',
+    'The defender recovers from block stun 2 frames before the attacker finishes their animation',
+    'The attack will break a shield in 2 hits',
+    'C',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    '"Minus on shield" means the attacker is in recovery frames while the defender is free to act. At -2, the defender has a 2-frame advantage, making the move very safe.'
+),
+(
+    'Super Smash Bros. Ultimate features "Stale-Move Negation". What mechanically happens if you use the exact same attack repeatedly?',
+    'The attack takes more frames to execute',
+    'The attack deals progressively less damage and knockback',
+    'The attack starts to damage the user',
+    'The opponent can automatically parry it',
+    'B',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Medium',
+    'The stale-move queue tracks the last 9 attacks that connect. If a move is in the queue, its damage and knockback are reduced to encourage varied gameplay.'
+),
+(
+    'At what state must a player execute a "tech" (pressing shield exactly 11 frames before hitting a surface) to avoid bouncing off the ground?',
+    'When they are in a "Tumble" state from receiving heavy knockback',
+    'When they are fast-falling',
+    'When they are charging a smash attack in the air',
+    'When they are caught in an opponent''s grab',
+    'A',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Medium',
+    'If an attack sends a character into a spinning "Tumble" animation, they must time a shield press just before hitting the floor, wall, or ceiling to tech and recover instantly.'
+),
+(
+    'In Ultimate, what dictates how many frames of total invincibility a character receives when grabbing the ledge?',
+    'Their character weight class',
+    'How many double jumps they have used',
+    'Their current damage percentage and how much time they spent in the air',
+    'It is a fixed 60 frames for every character',
+    'C',
+    'Super Smash Bros. Ultimate - Frame Data',
+    'Hard',
+    'Ledge invincibility is not static. It heavily decreases the higher the character''s damage percentage is, and increases slightly based on air time before grabbing the ledge.'
+);
