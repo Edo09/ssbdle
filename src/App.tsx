@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n/useI18n'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
 import { Header } from '@/components/layout/Header'
+import { PageTransition } from '@/components/layout/PageTransition'
 import { DailyMode } from '@/components/modes/DailyMode'
 import { ArcadeMode } from '@/components/modes/ArcadeMode'
 import { TriviaMode } from '@/components/modes/TriviaMode'
@@ -52,9 +53,11 @@ function App() {
 
         <main className="mx-auto w-full max-w-4xl flex-1 px-2.5 py-4 sm:px-4 sm:py-6">
           <div className="hud-panel animate-fade-up rounded-2xl p-2.5 sm:p-6">
-            {mode === 'daily' && <DailyMode />}
-            {mode === 'arcade' && <ArcadeMode />}
-            {mode === 'trivia' && <TriviaMode />}
+            <PageTransition pageKey={mode}>
+              {mode === 'daily' && <DailyMode />}
+              {mode === 'arcade' && <ArcadeMode />}
+              {mode === 'trivia' && <TriviaMode />}
+            </PageTransition>
           </div>
 
           <p className="mt-6 px-2 text-center text-xs text-muted-foreground">

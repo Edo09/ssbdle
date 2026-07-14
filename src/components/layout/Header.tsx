@@ -87,15 +87,15 @@ export function Header({
             <Languages />
           </Button>
 
-          <Button
-            variant="secondary"
-            size="icon"
+          <button
+            type="button"
             onClick={onOpenLeaderboard}
-            className="border-yellow/30 bg-yellow/10 text-yellow hover:bg-yellow/20"
+            className="leaderboard-btn group flex items-center gap-1.5 rounded-lg border border-yellow/40 bg-yellow/10 px-2.5 py-1.5 text-sm font-semibold text-yellow transition-all hover:bg-yellow/20 hover:shadow-[0_0_16px_-4px_var(--yellow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow/50"
             aria-label={t('header.leaderboards')}
           >
-            <Trophy />
-          </Button>
+            <Trophy className="size-4 transition-transform group-hover:scale-110" />
+            <span className="hidden sm:inline">{t('leaderboard.title')}</span>
+          </button>
 
           {user ? (
             <div className="flex items-center gap-1.5">

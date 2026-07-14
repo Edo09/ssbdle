@@ -220,13 +220,47 @@
   animation: content-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+/* ---- Leaderboard button attention glow ---- */
+.leaderboard-btn {
+  animation: lb-glow 2.5s ease-in-out infinite;
+}
+.leaderboard-btn:hover {
+  animation: none;
+}
+@keyframes lb-glow {
+  0%, 100% { box-shadow: 0 0 6px -2px rgba(255, 201, 60, 0.3); }
+  50%      { box-shadow: 0 0 14px -2px rgba(255, 201, 60, 0.55), 0 0 4px rgba(255, 201, 60, 0.2); }
+}
+
+/* ---- Page transitions ---- */
+.page-transition {
+  --page-transition-duration: 280ms;
+}
+.page-exit {
+  animation: page-out var(--page-transition-duration) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+.page-enter {
+  animation: page-in var(--page-transition-duration) cubic-bezier(0, 0, 0.2, 1) both;
+}
+@keyframes page-out {
+  from { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  to   { opacity: 0; transform: translateY(-8px) scale(0.98); filter: blur(2px); }
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tile-reveal,
   .animate-fade-up,
   .animate-pop-in,
   .dialog-overlay,
   .dialog-content,
-  .confetti-piece {
+  .confetti-piece,
+  .page-exit,
+  .page-enter,
+  .leaderboard-btn {
     animation: none !important;
   }
 }
