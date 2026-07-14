@@ -53,7 +53,7 @@ export function Header({
             <MaskIcon src={SMASH_SYMBOL} className="size-5 text-foreground sm:size-6" />
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
-            SMASH
+            SSBU
             <span className="bg-gradient-to-r from-[#ff4655] to-[#ffc93c] bg-clip-text text-transparent">
               DLE
             </span>

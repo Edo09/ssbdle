@@ -23,7 +23,7 @@ function buildShare(
   t: TFn,
 ): string {
   const header =
-    mode === 'daily' ? `SMASHDLE ${todayUTC()}` : 'SMASHDLE • Arcade'
+    mode === 'daily' ? `SSBUDLE ${todayUTC()}` : 'SSBUDLE • Arcade'
   const score =
     mode === 'daily'
       ? solved
