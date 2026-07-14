@@ -170,9 +170,17 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+@keyframes overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 @keyframes content-in {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.92) translateY(10px); filter: blur(4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+@keyframes content-out {
+  from { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  to { opacity: 0; transform: scale(0.95) translateY(6px); filter: blur(2px); }
 }
 
 .tile-reveal {
@@ -214,10 +222,16 @@
 }
 
 .dialog-overlay[data-state='open'] {
-  animation: overlay-in 0.2s ease both;
+  animation: overlay-in 0.22s ease both;
+}
+.dialog-overlay[data-state='closed'] {
+  animation: overlay-out 0.18s ease both;
 }
 .dialog-content[data-state='open'] {
-  animation: content-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: content-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.dialog-content[data-state='closed'] {
+  animation: content-out 0.2s cubic-bezier(0.4, 0, 1, 1) both;
 }
 
 /* ---- Leaderboard button attention glow ---- */
@@ -234,7 +248,7 @@
 
 /* ---- Page transitions ---- */
 .page-transition {
-  --page-transition-duration: 280ms;
+  --page-transition-duration: 150ms;
 }
 .page-exit {
   animation: page-out var(--page-transition-duration) cubic-bezier(0.4, 0, 1, 1) forwards;

@@ -31,7 +31,7 @@ function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content>) {
   const { t } = useI18n()
   return (
-    <DialogPortal>
+    <DialogPortal forceMount>
       <DialogOverlay />
       <DialogPrimitive.Content
         className={cn(

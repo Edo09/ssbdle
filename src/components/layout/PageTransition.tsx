@@ -16,7 +16,7 @@ interface Props {
 export function PageTransition({
   pageKey,
   children,
-  duration = 280,
+  duration = 150,
 }: Props) {
   const [displayedKey, setDisplayedKey] = useState(pageKey)
   const [displayedChildren, setDisplayedChildren] = useState(children)
