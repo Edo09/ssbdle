@@ -61,6 +61,7 @@ const en = {
     weight: 'Weight',
     number: 'No.',
     year: 'Release date',
+    platform: 'Platform',
   },
   legend: {
     correct: 'Correct',
@@ -101,7 +102,7 @@ const en = {
     lower: 'answer is lower',
   },
   values: {
-    gender: { Male: 'Male', Female: 'Female', Other: 'Other' },
+    gender: { Male: 'Male', Female: 'Female', Selectable: 'Selectable', Genderless: 'Genderless', Other: 'Other' },
     fighterType: { Starter: 'Starter', Unlockable: 'Unlockable', DLC: 'DLC' },
   },
   footer:
@@ -168,7 +169,8 @@ const es: typeof en = {
     debut: 'Debut',
     weight: 'Peso',
     number: 'N.º',
-    year: 'Año de lanzamiento',
+    year: 'Primera Aparición',
+    platform: 'Plataforma',
   },
   legend: {
     correct: 'Correcto',
@@ -209,7 +211,7 @@ const es: typeof en = {
     lower: 'la respuesta es menor',
   },
   values: {
-    gender: { Male: 'Masculino', Female: 'Femenino', Other: 'Otro' },
+    gender: { Male: 'Masculino', Female: 'Femenino', Selectable: 'Seleccionable', Genderless: 'Sin género', Other: 'Otro' },
     fighterType: { Starter: 'Inicial', Unlockable: 'Desbloqueable', DLC: 'DLC' },
   },
   footer:

@@ -68,6 +68,7 @@ export function GuessCard({ result }: { result: GuessResult }) {
       </div>
       <div className="grid grid-cols-2 gap-1.5">
         <Chip attr={byKey('universe')} span />
+        <Chip attr={byKey('source_platform')} span />
         <Chip attr={byKey('gender')} />
         <Chip attr={byKey('smash_debut')} />
         <Chip attr={byKey('weight')} />

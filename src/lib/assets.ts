@@ -58,6 +58,34 @@ for (const [path, url] of Object.entries(
   if (folder) RENDERS[folder] = url
 }
 
+/**
+ * DLC fighters ship as per-character folders (Square/ + Icons/) with a
+ * different layout from the flat portraits. Use their square art, keyed by
+ * fighter slug. Pyra & Mythra share one folder; Steve/Byleth have skin
+ * variants, so prefer the "(1)" file.
+ */
+const DLC_PORTRAITS: Record<string, string> = {}
+for (const [path, url] of Object.entries(
+  import.meta.glob<string>("../assets/dlc's/*/Square/*.png", {
+    eager: true,
+    import: 'default',
+  }),
+)) {
+  const folder = path.match(/\/([^/]+)\/Square\//)?.[1]
+  if (!folder) continue
+  const slug = characterSlug(folder)
+  if (!DLC_PORTRAITS[slug] || /\(1\)\.png$/.test(path)) DLC_PORTRAITS[slug] = url
+}
+
+function dlcPortrait(slug: string): string | undefined {
+  return (
+    DLC_PORTRAITS[slug] ??
+    (slug === 'pyra' || slug === 'mythra'
+      ? DLC_PORTRAITS['pyra_and_mythra']
+      : undefined)
+  )
+}
+
 function byBasename(mods: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = {}
   for (const [path, url] of Object.entries(mods)) {
@@ -92,13 +120,14 @@ const SERIES_ALIAS: Record<string, string> = {
 
 /** 180×100 roster thumbnail. */
 export function smallPortrait(name: string): string | undefined {
-  return SMALL_PORTRAITS[characterSlug(name)]
+  const slug = characterSlug(name)
+  return SMALL_PORTRAITS[slug] ?? dlcPortrait(slug)
 }
 
 /** 512×512 square art; falls back to the small thumbnail. */
 export function fullPortrait(name: string): string | undefined {
   const slug = characterSlug(name)
-  return FULL_PORTRAITS[slug] ?? SMALL_PORTRAITS[slug]
+  return FULL_PORTRAITS[slug] ?? dlcPortrait(slug) ?? SMALL_PORTRAITS[slug]
 }
 
 /** Monochrome stock-icon URL (black fill — render through a CSS mask). */

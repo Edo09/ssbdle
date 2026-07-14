@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 
 const KEY_TO_COL: Record<string, string> = {
   universe: 'universe',
+  source_platform: 'platform',
   gender: 'gender',
   fighter_type: 'type',
   smash_debut: 'debut',
@@ -45,14 +46,14 @@ export function AttributeCell({
   return (
     <div
       className={cn(
-        'tile-reveal relative flex min-h-[3rem] items-center justify-center rounded-lg border px-1 py-1.5 text-center sm:min-h-[3.5rem]',
+        'tile-reveal relative flex min-h-12 items-center justify-center rounded-lg border px-1 py-1.5 text-center sm:min-h-14',
         isCorrect
           ? 'border-correct/40 bg-correct/90 text-correct-foreground'
           : isPartial
             ? 'border-partial/40 bg-partial/90 text-partial-foreground'
             : 'border-border bg-absent text-absent-foreground',
       )}
-      style={{ animationDelay: `${index * 90}ms` }}
+      style={{ animationDelay: `${index * 400}ms` }}
     >
       {isCorrect && (
         <Check className="absolute right-1 top-1 size-3 opacity-80" aria-hidden />

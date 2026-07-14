@@ -16,10 +16,10 @@ import { useI18n } from '@/i18n/useI18n'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const MODES: { id: Mode; icon: typeof Flame }[] = [
-  { id: 'daily', icon: Flame },
-  { id: 'arcade', icon: InfinityIcon },
-  { id: 'trivia', icon: BrainCircuit },
+const MODES: { id: Mode; icon: typeof Flame; color: string }[] = [
+  { id: 'daily', icon: Flame, color: 'var(--primary)' },
+  { id: 'arcade', icon: InfinityIcon, color: 'var(--accent)' },
+  { id: 'trivia', icon: BrainCircuit, color: 'var(--green)' },
 ]
 
 interface Props {
@@ -49,23 +49,26 @@ export function Header({
     <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
         <a href="/" className="group flex shrink-0 items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-lg border border-primary/40 bg-card text-primary shadow-[0_6px_18px_-6px_var(--primary)] sm:size-10">
-            <MaskIcon src={SMASH_SYMBOL} className="size-5 sm:size-6" />
+          <span className="flex size-9 items-center justify-center rounded-lg border border-primary/40 bg-gradient-to-br from-primary/30 to-accent/30 shadow-[0_6px_18px_-6px_var(--primary)] sm:size-10">
+            <MaskIcon src={SMASH_SYMBOL} className="size-5 text-foreground sm:size-6" />
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
-            SMASH<span className="text-primary">DLE</span>
+            SMASH
+            <span className="bg-gradient-to-r from-[#ff4655] to-[#ffc93c] bg-clip-text text-transparent">
+              DLE
+            </span>
           </span>
         </a>
 
         <div className="flex items-center gap-1.5">
           <div
-            className="flex items-center gap-1 rounded-lg border border-border bg-secondary/40 px-2 py-1.5"
+            className="flex items-center gap-1 rounded-lg border border-orange/30 bg-orange/10 px-2 py-1.5"
             title={t('header.streakTitle')}
           >
             <Flame
               className={cn(
                 'size-4',
-                streak > 0 ? 'text-primary' : 'text-muted-foreground',
+                streak > 0 ? 'text-orange' : 'text-muted-foreground',
               )}
             />
             <span className="font-display text-sm font-bold tabular-nums">
@@ -77,6 +80,7 @@ export function Header({
             variant="secondary"
             size="icon"
             onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+            className="border-accent/30 bg-accent/10 text-accent hover:bg-accent/20"
             aria-label={t('header.switchLanguage')}
             title={t('header.switchLanguage')}
           >
@@ -87,6 +91,7 @@ export function Header({
             variant="secondary"
             size="icon"
             onClick={onOpenLeaderboard}
+            className="border-yellow/30 bg-yellow/10 text-yellow hover:bg-yellow/20"
             aria-label={t('header.leaderboards')}
           >
             <Trophy />
@@ -117,23 +122,31 @@ export function Header({
 
       <nav className="mx-auto max-w-4xl px-3 pb-2.5 sm:px-4 sm:pb-3">
         <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-border bg-secondary/30 p-1.5">
-          {MODES.map(({ id, icon: Icon }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => onModeChange(id)}
-              aria-pressed={mode === id}
-              className={cn(
-                'flex items-center justify-center gap-1.5 rounded-lg py-2 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
-                mode === id
-                  ? 'bg-primary text-primary-foreground shadow-[0_6px_18px_-8px_var(--primary)]'
-                  : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
-              )}
-            >
-              <Icon className="size-4" />
-              {t('header.' + id)}
-            </button>
-          ))}
+          {MODES.map(({ id, icon: Icon, color }) => {
+            const active = mode === id
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => onModeChange(id)}
+                aria-pressed={active}
+                style={
+                  active
+                    ? { background: color, boxShadow: `0 6px 18px -8px ${color}` }
+                    : undefined
+                }
+                className={cn(
+                  'flex items-center justify-center gap-1.5 rounded-lg py-2 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
+                  active
+                    ? 'text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
+                )}
+              >
+                <Icon className="size-4" style={active ? undefined : { color }} />
+                {t('header.' + id)}
+              </button>
+            )
+          })}
         </div>
       </nav>
     </header>

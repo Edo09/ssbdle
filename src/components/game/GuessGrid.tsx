@@ -6,7 +6,7 @@ import { AttributeCell } from '@/components/game/AttributeCell'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
 import { GuessCard } from '@/components/game/GuessCard'
 
-const GRID_COLS = 'minmax(4.5rem, 1.3fr) repeat(5, minmax(0, 1fr))'
+const GRID_COLS = 'minmax(4.5rem, 1.3fr) repeat(6, minmax(0, 1fr))'
 
 function FighterTile({ result }: { result: GuessResult }) {
   const universe = String(

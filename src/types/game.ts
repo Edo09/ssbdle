@@ -21,6 +21,7 @@ export const CharacterSchema = z.object({
   weight: z.number(),
   weight_class: z.string(),
   debut_year: z.number(),
+  source_platform: z.string().nullable().optional(),
   smash_debut_num: z.coerce.number().nullable().optional(),
   created_at: z.string().nullable().optional(),
 })
