@@ -23,14 +23,17 @@ export function DailyMode() {
   )
 
   return (
-    <section aria-label={t('header.daily')}>
-      <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+    <section aria-labelledby="daily-mode-heading">
+      <h2
+        id="daily-mode-heading"
+        className="mb-4 flex items-center gap-2 text-sm text-muted-foreground"
+      >
         <CalendarDays className="size-4 text-primary" />
         <span>
           {t('daily.label')} ·{' '}
           <span className="text-foreground">{prettyDate}</span>
         </span>
-      </div>
+      </h2>
 
       {loadingChars && characters.length === 0 ? (
         <div className="space-y-3">

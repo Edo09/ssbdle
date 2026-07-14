@@ -23,14 +23,17 @@ export function ArcadeMode() {
   }, [roundId, starting, startArcade])
 
   return (
-    <section aria-label={t('header.arcade')}>
-      <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+    <section aria-labelledby="arcade-mode-heading">
+      <h2
+        id="arcade-mode-heading"
+        className="mb-4 flex items-center gap-2 text-sm text-muted-foreground"
+      >
         <InfinityIcon className="size-4 text-primary" />
         <span>
           {t('arcade.label')} ·{' '}
           <span className="text-foreground">{t('arcade.tagline')}</span>
         </span>
-      </div>
+      </h2>
 
       {starting && !roundId ? (
         <div className="space-y-3">

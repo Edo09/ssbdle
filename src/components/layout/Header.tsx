@@ -52,12 +52,12 @@ export function Header({
           <span className="flex size-9 items-center justify-center rounded-lg border border-primary/40 bg-gradient-to-br from-primary/30 to-accent/30 shadow-[0_6px_18px_-6px_var(--primary)] sm:size-10">
             <MaskIcon src={SMASH_SYMBOL} className="size-5 text-foreground sm:size-6" />
           </span>
-          <span className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
+          <h1 className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
             SSBU
             <span className="bg-gradient-to-r from-[#ff4655] to-[#ffc93c] bg-clip-text text-transparent">
               DLE
             </span>
-          </span>
+          </h1>
         </a>
 
         <div className="flex items-center gap-1.5">

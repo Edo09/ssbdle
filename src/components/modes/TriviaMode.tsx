@@ -69,11 +69,14 @@ export function TriviaMode() {
     : []
 
   return (
-    <section aria-label={t('trivia.aria')}>
-      <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+    <section aria-labelledby="trivia-mode-heading">
+      <h2
+        id="trivia-mode-heading"
+        className="mb-4 flex items-center gap-2 text-sm text-muted-foreground"
+      >
         <BrainCircuit className="size-4 text-primary" />
         <span>{t('trivia.tagline')}</span>
-      </div>
+      </h2>
 
       {loading ? (
         <div className="space-y-3">
@@ -109,9 +112,9 @@ export function TriviaMode() {
             )}
           </div>
 
-          <h2 className="font-display text-xl font-bold leading-snug">
+          <h3 className="font-display text-xl font-bold leading-snug">
             {question.question}
-          </h2>
+          </h3>
 
           <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
             {options.map((opt) => {

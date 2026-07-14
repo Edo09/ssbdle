@@ -1,0 +1,17 @@
+{
+  "name": "SSBUDLE — Super Smash Bros. Ultimate Guessing Game",
+  "short_name": "SSBUDLE",
+  "description": "A daily Super Smash Bros. Ultimate fighter guessing game with endless arcade and trivia modes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d0e13",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
