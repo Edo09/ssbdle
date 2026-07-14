@@ -1,19 +1,22 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
-import { fighterImage, initials, universeColor } from '@/lib/fighters'
+import { fullPortrait, smallPortrait } from '@/lib/assets'
+import { initials, universeColor } from '@/lib/fighters'
 
 interface Props {
   name: string
-  gameName: string
   universe?: string
+  /** Use the 512×512 art instead of the roster thumbnail (large avatars). */
+  full?: boolean
   className?: string
 }
 
-export function CharacterAvatar({ name, gameName, universe, className }: Props) {
+export function CharacterAvatar({ name, universe, full, className }: Props) {
   const color = universeColor(universe ?? name)
+  const src = full ? fullPortrait(name) : smallPortrait(name)
   return (
     <Avatar className={cn('rounded-lg', className)}>
-      <AvatarImage src={fighterImage(gameName)} alt={name} />
+      <AvatarImage src={src} alt={name} />
       <AvatarFallback
         aria-hidden
         style={{

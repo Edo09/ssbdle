@@ -4,11 +4,12 @@ import {
   Infinity as InfinityIcon,
   Languages,
   LogOut,
-  Swords,
   Trophy,
   User as UserIcon,
 } from 'lucide-react'
 import type { Mode } from '@/types/game'
+import { SMASH_SYMBOL } from '@/lib/assets'
+import { MaskIcon } from '@/components/game/SeriesIcon'
 import { displayName, useAuthStore } from '@/store/useAuthStore'
 import { useGameStore } from '@/store/useGameStore'
 import { useI18n } from '@/i18n/useI18n'
@@ -48,8 +49,8 @@ export function Header({
     <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
         <a href="/" className="group flex shrink-0 items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-[0_6px_18px_-6px_var(--primary)] sm:size-9">
-            <Swords className="size-4 sm:size-5" />
+          <span className="flex size-9 items-center justify-center rounded-lg border border-primary/40 bg-card text-primary shadow-[0_6px_18px_-6px_var(--primary)] sm:size-10">
+            <MaskIcon src={SMASH_SYMBOL} className="size-5 sm:size-6" />
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-glow sm:text-xl">
             SMASH<span className="text-primary">DLE</span>

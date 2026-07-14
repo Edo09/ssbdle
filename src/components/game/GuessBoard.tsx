@@ -3,10 +3,12 @@ import { Flag, Loader2 } from 'lucide-react'
 import type { BoardStatus } from '@/store/useGameStore'
 import type { Character, GuessResult, Mode } from '@/types/game'
 import { useI18n } from '@/i18n/useI18n'
+import { SMASH_SYMBOL } from '@/lib/assets'
 import { Button } from '@/components/ui/button'
 import { GuessInput } from '@/components/game/GuessInput'
 import { GuessGrid } from '@/components/game/GuessGrid'
 import { Legend } from '@/components/game/Legend'
+import { MaskIcon } from '@/components/game/SeriesIcon'
 import { ResultBanner } from '@/components/game/ResultBanner'
 
 interface Props {
@@ -95,11 +97,17 @@ export function GuessBoard({
         </div>
       )}
 
-      <div className="mt-4">
-        <GuessGrid guesses={guesses} />
-      </div>
-
-      {guesses.length > 0 && <Legend />}
+      {playing && guesses.length === 0 && (
+        <div className="flex flex-col items-center gap-3 py-12">
+          <MaskIcon
+            src={SMASH_SYMBOL}
+            className="size-28 text-foreground opacity-[0.07]"
+          />
+          <p className="text-sm text-muted-foreground/70">
+            {t('board.emptyHint')}
+          </p>
+        </div>
+      )}
 
       {!playing && (
         <ResultBanner
@@ -110,6 +118,12 @@ export function GuessBoard({
           onPlayAgain={onPlayAgain}
         />
       )}
+
+      <div className="mt-4">
+        <GuessGrid guesses={guesses} />
+      </div>
+
+      {guesses.length > 0 && <Legend />}
     </div>
   )
 }

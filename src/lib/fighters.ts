@@ -58,12 +58,3 @@ export function initials(name: string): string {
   if (words.length === 1) return words[0].slice(0, 2).toUpperCase()
   return (words[0][0] + words[1][0]).toUpperCase()
 }
-
-/**
- * Local image path for a fighter, keyed by its game_name codename.
- * Drop PNGs into `public/fighters/<game_name>.png` and they appear
- * automatically; until then the avatar falls back to a monogram.
- */
-export function fighterImage(gameName: string): string {
-  return `/fighters/${gameName}.png`
-}

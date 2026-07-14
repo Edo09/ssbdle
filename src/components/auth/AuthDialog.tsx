@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { z } from 'zod'
 import { toast } from 'sonner'
-import { Loader2, Swords } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { useAuthStore } from '@/store/useAuthStore'
+import { SMASH_SYMBOL } from '@/lib/assets'
+import { MaskIcon } from '@/components/game/SeriesIcon'
 import { useI18n } from '@/i18n/useI18n'
 import {
   Dialog,
@@ -103,7 +105,7 @@ export function AuthDialog({ open, onOpenChange }: Props) {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="mx-auto mb-1 flex size-11 items-center justify-center rounded-xl bg-primary/15 text-primary sm:mx-0">
-            <Swords className="size-6" />
+            <MaskIcon src={SMASH_SYMBOL} className="size-6" />
           </div>
           <DialogTitle>{t('auth.title')}</DialogTitle>
           <DialogDescription>{t('auth.subtitle')}</DialogDescription>

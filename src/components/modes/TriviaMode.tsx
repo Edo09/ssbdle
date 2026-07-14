@@ -8,7 +8,9 @@ import { useGameStore } from '@/store/useGameStore'
 import { useI18n } from '@/i18n/useI18n'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { MaskIcon } from '@/components/game/SeriesIcon'
 import { Skeleton } from '@/components/ui/skeleton'
+import { SMASH_SYMBOL } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 
 type Option = { letter: string; text: string }
@@ -78,6 +80,12 @@ export function TriviaMode() {
           <Skeleton className="h-8 w-3/4" />
           <Skeleton className="h-12 w-full" />
           <Skeleton className="h-12 w-full" />
+          <div className="flex justify-center py-10">
+            <MaskIcon
+              src={SMASH_SYMBOL}
+              className="size-14 animate-pulse text-muted-foreground/40"
+            />
+          </div>
         </div>
       ) : error ? (
         <p className="text-sm text-destructive">{error}</p>

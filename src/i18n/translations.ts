@@ -37,6 +37,7 @@ const en = {
     leftMany: 'guesses left',
     countOne: 'guess',
     countMany: 'guesses',
+    emptyHint: "Type a fighter's name to start guessing",
   },
   result: {
     won: 'Nailed it!',
@@ -144,6 +145,7 @@ const es: typeof en = {
     leftMany: 'intentos restantes',
     countOne: 'intento',
     countMany: 'intentos',
+    emptyHint: 'Escribe el nombre de un luchador para empezar a adivinar',
   },
   result: {
     won: '¡Lo lograste!',

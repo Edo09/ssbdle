@@ -19,7 +19,6 @@ function FighterTile({ result }: { result: GuessResult }) {
     >
       <CharacterAvatar
         name={result.guess.name}
-        gameName={result.guess.game_name}
         universe={universe}
         className="size-9 shrink-0"
       />

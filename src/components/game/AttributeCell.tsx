@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, Check } from 'lucide-react'
 import type { Attribute } from '@/types/game'
 import { translateValue, useI18n } from '@/i18n/useI18n'
+import { SeriesIcon } from '@/components/game/SeriesIcon'
 import { cn } from '@/lib/utils'
 
 const KEY_TO_COL: Record<string, string> = {
@@ -58,6 +59,12 @@ export function AttributeCell({
       )}
       <span className="inline-flex items-center justify-center gap-1">
         <span className="font-display text-xs font-semibold leading-[1.1] [overflow-wrap:anywhere] sm:text-sm">
+          {attr.key === 'universe' && (
+            <SeriesIcon
+              universe={String(attr.guess)}
+              className="mr-1 size-3.5 align-[-0.2em] opacity-90 sm:size-4"
+            />
+          )}
           {shown}
         </span>
         {arrow &&

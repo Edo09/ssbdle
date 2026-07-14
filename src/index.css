@@ -10,32 +10,35 @@
 }
 
 :root {
-  --background: #0d0e13;
-  --foreground: #f4f1ea;
-  --card: #15161d;
-  --card-foreground: #f4f1ea;
-  --popover: #14151c;
-  --popover-foreground: #f4f1ea;
-  --primary: #ff5a1f;
-  --primary-foreground: #170a03;
-  --secondary: #1c1e28;
-  --secondary-foreground: #f4f1ea;
-  --muted: #191b23;
-  --muted-foreground: #9b968a;
-  --accent: #ffc21f;
-  --accent-foreground: #170f03;
-  --destructive: #f04438;
-  --destructive-foreground: #fff7f5;
-  --border: #262835;
-  --input: #2b2d3a;
-  --ring: #ff5a1f;
+  /* Smash Ultimate palette — see docs/smash_bros_website_palette.md */
+  --background: #0d1117; /* Primary Background */
+  --foreground: #f0f6fc; /* Text Light */
+  --card: #161b22; /* Card / Surface Background */
+  --card-foreground: #f0f6fc;
+  --popover: #161b22;
+  --popover-foreground: #f0f6fc;
+  --primary: #de1a22; /* Smash Crimson */
+  --primary-foreground: #f0f6fc;
+  --secondary: #21262d;
+  --secondary-foreground: #f0f6fc;
+  --muted: #1c2128;
+  --muted-foreground: #8b949e;
+  --accent: #009bff; /* Chrono Blue */
+  --accent-foreground: #04121f;
+  --highlight: #8cefff; /* Energy Cyan */
+  --highlight-foreground: #03181d;
+  --destructive: #de1a22;
+  --destructive-foreground: #fff5f5;
+  --border: #262c36;
+  --input: #30363d;
+  --ring: #009bff;
   --radius: 0.85rem;
-  --correct: #2fbf71;
+  --correct: #3fb950;
   --correct-foreground: #04140b;
-  --partial: #f4b740;
+  --partial: #d29922;
   --partial-foreground: #1b1204;
-  --absent: #2f3040;
-  --absent-foreground: #d7d3c8;
+  --absent: #30363d;
+  --absent-foreground: #c9d1d9;
 }
 
 @theme inline {
@@ -53,6 +56,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -105,9 +110,9 @@
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60rem 40rem at 50% -8%, rgba(255, 90, 31, 0.16), transparent 60%),
-    radial-gradient(40rem 30rem at 92% 8%, rgba(255, 194, 31, 0.08), transparent 55%),
-    radial-gradient(50rem 40rem at 4% 100%, rgba(80, 120, 255, 0.06), transparent 55%),
+    radial-gradient(60rem 40rem at 50% -8%, rgba(222, 26, 34, 0.16), transparent 60%),
+    radial-gradient(40rem 30rem at 92% 8%, rgba(0, 155, 255, 0.09), transparent 55%),
+    radial-gradient(50rem 40rem at 4% 100%, rgba(140, 239, 255, 0.05), transparent 55%),
     var(--background);
 }
 .app-bg::after {
@@ -132,7 +137,7 @@
     0 20px 40px -24px rgba(0, 0, 0, 0.8);
 }
 .text-glow {
-  text-shadow: 0 0 24px rgba(255, 90, 31, 0.45);
+  text-shadow: 0 0 24px rgba(140, 239, 255, 0.4);
 }
 
 @keyframes tile-in {
@@ -169,6 +174,32 @@
   animation: pop-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+/* Victory confetti — pieces are positioned/tinted inline via custom props. */
+.confetti-piece {
+  position: absolute;
+  top: -14px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall var(--cf-duration, 3.2s) var(--cf-delay, 0s)
+    ease-in 2 both;
+}
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) rotateZ(0deg);
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--cf-drift, 0px), 360px, 0)
+      rotateZ(var(--cf-spin, 540deg));
+  }
+}
+
 .dialog-overlay[data-state='open'] {
   animation: overlay-in 0.2s ease both;
 }
@@ -181,7 +212,8 @@
   .animate-fade-up,
   .animate-pop-in,
   .dialog-overlay,
-  .dialog-content {
+  .dialog-content,
+  .confetti-piece {
     animation: none !important;
   }
 }

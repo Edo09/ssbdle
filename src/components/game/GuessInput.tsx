@@ -10,6 +10,8 @@ import { Search } from 'lucide-react'
 import type { Character } from '@/types/game'
 import { useI18n } from '@/i18n/useI18n'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
+import { MaskIcon, SeriesIcon } from '@/components/game/SeriesIcon'
+import { stockIcon } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -142,20 +144,21 @@ export function GuessInput({
             >
               <CharacterAvatar
                 name={c.name}
-                gameName={c.game_name}
                 universe={c.universe}
                 className="size-9"
               />
               <span className="flex flex-col leading-tight">
                 <span className="font-semibold text-foreground">{c.name}</span>
                 <span
-                  className="text-xs"
+                  className="flex items-center gap-1 text-xs"
                   style={{ color: 'var(--muted-foreground)' }}
                 >
+                  <SeriesIcon universe={c.universe} className="size-3" />
                   {c.universe}
                 </span>
               </span>
-              <span className="ml-auto font-display text-xs text-muted-foreground">
+              <span className="ml-auto flex items-center gap-1.5 font-display text-xs text-muted-foreground">
+                <MaskIcon src={stockIcon(c.name)} className="size-3.5 opacity-70" />
                 #{c.fighter_number}
               </span>
             </li>

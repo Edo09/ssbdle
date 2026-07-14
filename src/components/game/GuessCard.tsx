@@ -3,6 +3,7 @@ import type { Attribute, GuessResult } from '@/types/game'
 import { translateValue, useI18n } from '@/i18n/useI18n'
 import { COLUMN_LABEL_KEY } from '@/lib/columns'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
+import { SeriesIcon } from '@/components/game/SeriesIcon'
 import { cn } from '@/lib/utils'
 
 function statusClasses(status: string) {
@@ -34,6 +35,9 @@ function Chip({ attr, span }: { attr?: Attribute; span?: boolean }) {
         {label}
       </span>
       <span className="flex items-center gap-1 font-display text-sm font-semibold leading-tight [overflow-wrap:anywhere]">
+        {attr.key === 'universe' && (
+          <SeriesIcon universe={String(attr.guess)} className="size-3.5" />
+        )}
         {shown}
         {arrow &&
           (attr.direction === 'up' ? (
@@ -55,7 +59,6 @@ export function GuessCard({ result }: { result: GuessResult }) {
       <div className="mb-2 flex items-center gap-2">
         <CharacterAvatar
           name={result.guess.name}
-          gameName={result.guess.game_name}
           universe={universe}
           className="size-9 shrink-0"
         />
