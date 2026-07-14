@@ -1,0 +1,358 @@
+INSERT INTO public.trivia_questions (question, option_a, option_b, option_c, option_d, correct_option, category, difficulty, explanation) VALUES
+(
+    'Which fighter has a unique down special called "Command Selection" that brings up a randomized menu of spells?',
+    'Robin',
+    'Hero',
+    'Zelda',
+    'Palutena',
+    'B',
+    'Super Smash Bros. Ultimate - Mechanics',
+    'Easy',
+    'Hero''s down special, Command Selection, opens a menu with 4 randomly selected spells from a larger pool, reflecting his RPG origins.'
+),
+(
+    'What are the names of the four Heroes'' Relics that Byleth uses in their attacks?',
+    'Sword of the Creator, Areadbhar, Aymr, Failnaught',
+    'Falchion, Ragnell, Yato, Binding Blade',
+    'Levin Sword, Thoron, Elwind, Nosferatu',
+    'Monado, Aegis, Buster Sword, Gunblade',
+    'A',
+    'Super Smash Bros. Ultimate - Weapons',
+    'Medium',
+    'Byleth wields the Sword of the Creator, as well as the relics of the three house leaders: Areadbhar (Dimitri), Aymr (Edelgard), and Failnaught (Claude).'
+),
+(
+    'Piranha Plant was unique in Super Smash Bros. Ultimate because it was released as what kind of fighter?',
+    'A free update for everyone',
+    'The first Fighter Pass Vol. 1 DLC character',
+    'An early purchase bonus',
+    'An unlockable character through Spirit Board only',
+    'C',
+    'Super Smash Bros. Ultimate - Release History',
+    'Easy',
+    'Piranha Plant was initially offered as a free bonus for players who registered their physical or digital copy of the game by January 31, 2019.'
+),
+(
+    'What happens if Steve uses his Final Smash, House of Boom, but fails to trap any opponents in the initial giant piston?',
+    'He explodes, taking 10% damage',
+    'Nothing happens and the Final Smash ends immediately',
+    'A Creeper spawns and walks across the stage',
+    'He places a block of TNT that detonates after 5 seconds',
+    'B',
+    'Super Smash Bros. Ultimate - Final Smashes',
+    'Hard',
+    'Steve''s Final Smash requires the initial giant piston to hit an opponent to trigger the cinematic sequence. If it misses, the attack just ends with no effect.'
+),
+(
+    'When Kirby copies Olimar, how does his Pikmin Pluck ability differ from Olimar''s?',
+    'Kirby throws only Red Pikmin',
+    'Kirby plucks and throws Pikmin of various colors, but they disappear shortly after hitting the ground',
+    'Kirby throws a random Pikmin that acts as a standard energy projectile',
+    'Kirby gains a permanent Pikmin companion that follows him the whole match',
+    'B',
+    'Super Smash Bros. Ultimate - Copy Abilities',
+    'Medium',
+    'Kirby gains Olimar''s standard special, allowing him to pluck Pikmin and throw them. They retain their elemental properties, but unlike Olimar''s, Kirby''s Pikmin disappear shortly after being thrown or hitting the ground.'
+),
+(
+    'Which of these characters has a mechanic where they take self-damage from using some of their own electrical attacks?',
+    'Pikachu',
+    'Robin',
+    'Pichu',
+    'Hero',
+    'C',
+    'Super Smash Bros. Ultimate - Mechanics',
+    'Easy',
+    'True to its Pokédex entries, Pichu injures itself when using electric attacks, adding a risk/reward element to its high-damage output.'
+),
+(
+    'What is the maximum number of times King K. Rool''s belly armor can be hit before it breaks and leaves him dizzied?',
+    'It depends solely on the damage percentage of the attacks, not a set number of hits',
+    '3 hits',
+    '5 hits',
+    '7 hits',
+    'A',
+    'Super Smash Bros. Ultimate - Mechanics',
+    'Hard',
+    'King K. Rool''s belly armor has its own HP (health points). When it takes a certain amount of damage (regardless of the number of individual hits), it shatters, placing him in a shield-break state.'
+),
+(
+    'Which of the following Mii Fighter types can equip the "Suplex" special move?',
+    'Mii Brawler',
+    'Mii Swordfighter',
+    'Mii Gunner',
+    'All of them',
+    'A',
+    'Super Smash Bros. Ultimate - Movesets',
+    'Medium',
+    'Suplex is one of the Side Special move options exclusive to the Mii Brawler.'
+);
+
+INSERT INTO public.trivia_questions (question, option_a, option_b, option_c, option_d, correct_option, category, difficulty, explanation) VALUES
+
+-- 1. Mii Brawler
+('Which of these is a Side Special option for the Mii Brawler?', 'Shotput', 'Suplex', 'Chakram', 'Gale Strike', 'B', 'SSBU - Mii Brawler', 'Medium', 'Suplex is an exclusive, command-grab Side Special for the Mii Brawler.'),
+
+-- 2. Mii Swordfighter
+('Mii Swordfighter''s "Hero''s Spin" Up Special heavily resembles a move used by which iconic fighter?', 'Marth', 'Link', 'Cloud', 'Shulk', 'B', 'SSBU - Mii Swordfighter', 'Easy', 'Hero''s Spin is a spinning sword attack that charges identically to Link''s Spin Attack.'),
+
+-- 3. Mii Gunner
+('Mii Gunner''s Final Smash, Full Blast, fires a giant beam that functions similarly to whose Final Smash?', 'Samus', 'R.O.B.', 'Fox', 'Mario', 'A', 'SSBU - Mii Gunner', 'Easy', 'Full Blast is a massive energy beam that works almost identically to Samus''s Zero Laser.'),
+
+-- 4. Mario
+('What unique effect does Mario''s Side Special (Cape) have on opponents?', 'It puts them to sleep', 'It reverses the direction they are facing', 'It shrinks them', 'It temporarily disables their shield', 'B', 'SSBU - Mario', 'Easy', 'The Cape reflects projectiles and flips opponents around, which is very dangerous for their off-stage recoveries.'),
+
+-- 5. Donkey Kong
+('What property does Donkey Kong gain when using his fully charged Neutral Special (Giant Punch) on the ground?', 'Super Armor', 'Invisibility', 'Health Regeneration', 'Invincibility', 'A', 'SSBU - Donkey Kong', 'Medium', 'A fully charged Giant Punch on the ground grants DK Super Armor, allowing him to tank through an opponent''s hit.'),
+
+-- 6. Link
+('What special property does Link''s Forward Smash have if he is at 0% damage?', 'It breaks shields instantly', 'It fires a Sword Beam', 'It heals him slightly', 'It ignores counters', 'B', 'SSBU - Link', 'Medium', 'Referencing the classic Zelda games, Link fires a projectile beam from the Master Sword when he swings his Forward Smash at 0% damage.'),
+
+-- 7. Samus
+('Which of Samus''s attacks allows her to tether to the ledge from a distance?', 'Neutral Special', 'Up Special', 'Grab / Z-Air', 'Down Air', 'C', 'SSBU - Samus', 'Easy', 'Samus uses her Grapple Beam for grabs, and can also use it in the air (Z-Air) to tether to the edge of the stage.'),
+
+-- 8. Yoshi
+('What makes Yoshi''s shield unique compared to the rest of the roster?', 'It reflects projectiles', 'It damages opponents who touch it', 'It never shrinks and prevents shield poking', 'It completely ignores grab attacks', 'C', 'SSBU - Yoshi', 'Easy', 'Yoshi encases himself in an egg. As the shield loses health, it darkens in color rather than shrinking, meaning he can never be "shield poked".'),
+
+-- 9. Kirby
+('When Kirby uses his Neutral Special to inhale an opponent, what does he gain?', 'Their Final Smash', 'Their Neutral Special move', 'Their recovery move', 'Their weapon', 'B', 'SSBU - Kirby', 'Easy', 'Kirby copies the Neutral Special ability of whichever character he inhales, complete with a visual hat or accessory.'),
+
+-- 10. Fox
+('Fox''s Down Special is the Reflector. What is its commonly used nickname within the Smash community?', 'The Hexagon', 'The Shield', 'The Shine', 'The Mirror', 'C', 'SSBU - Fox', 'Medium', 'Due to its visual flair and history in Melee, Fox and Falco''s reflectors are widely referred to as "The Shine".'),
+
+-- 11. Pikachu
+('What happens to Pikachu''s Neutral Special (Thunder Jolt) when it hits the edge of a stage?', 'It disappears instantly', 'It travels down the side and around the geometry of the stage', 'It explodes', 'It bounces back towards Pikachu', 'B', 'SSBU - Pikachu', 'Medium', 'Thunder Jolt is a unique projectile that hugs the ground and will wrap around edges, making it a great edge-guarding tool.'),
+
+-- 12. Luigi
+('What occurs when Luigi perfectly connects the "sweetspot" of his Up Special (Super Jump Punch)?', 'He recovers all his health', 'It turns into an explosive, high-knockback hit that sets the opponent on fire', 'It freezes the opponent', 'It guarantees a shield break', 'B', 'SSBU - Luigi', 'Medium', 'The very start of the Super Jump Punch has a tiny hitbox that, if connected, acts as a devastating "Fire Jump Punch".'),
+
+-- 13. Captain Falcon
+('During Captain Falcon''s Final Smash, what vehicle does he hit the opponent with?', 'The Arwing', 'The Blue Falcon', 'The Falcon Flyer', 'The Warp Star', 'B', 'SSBU - Captain Falcon', 'Easy', 'He calls his signature F-Zero machine, the Blue Falcon, to run over the opponents caught in the cinematic.'),
+
+-- 14. Ness
+('Which of Ness''s Special moves is used to safely absorb energy-based projectiles and heal him?', 'PK Fire', 'PK Thunder', 'PSI Magnet', 'PK Flash', 'C', 'SSBU - Ness', 'Easy', 'His Down Special, PSI Magnet, absorbs energy-based projectiles (like Charge Shots) and converts them into health.'),
+
+-- 15. Peach
+('What rare item can Peach occasionally pull from the ground using her Down Special (Vegetable)?', 'A Bob-omb', 'A Master Ball', 'A Fairy Bottle', 'A Smash Orb', 'A', 'SSBU - Peach', 'Hard', 'While she normally pulls turnips, Peach has a very small, random chance to pull a devastating Bob-omb or a Mr. Saturn.'),
+
+-- 16. Bowser
+('Bowser possesses a passive mechanic known as "Tough Guy". What does it do?', 'Increases his damage when he is above 100%', 'Makes him completely immune to all projectiles', 'Prevents him from flinching from weak, low-knockback attacks', 'Allows his shield to break other shields instantly', 'C', 'SSBU - Bowser', 'Hard', 'Tough Guy allows Bowser to ignore the hitstun of very weak moves (like rapid jabs), allowing him to attack right through them.'),
+
+-- 17. Zelda
+('Zelda''s Down Special summons which armored entity to attack for her?', 'A Darknut', 'A Phantom', 'An Iron Knuckle', 'A Guardian', 'B', 'SSBU - Zelda', 'Easy', 'Zelda summons a Phantom (from The Legend of Zelda: Phantom Hourglass/Spirit Tracks) which can be fully charged for a delayed strike.'),
+
+-- 18. Sheik
+('What item does Sheik throw for her Neutral Special?', 'Shuriken', 'Kunai', 'Needles', 'Deku Nuts', 'C', 'SSBU - Sheik', 'Easy', 'Sheik uses Needle Storm, throwing a flurry of needles that can be charged up to hold more projectiles.'),
+
+-- 19. Marth
+('To deal maximum damage and knockback with Marth, where must his sword strike the opponent?', 'At the base (hilt)', 'In the middle of the blade', 'At the very tip', 'It does not matter', 'C', 'SSBU - Marth', 'Easy', 'Marth is the original "tipper" character; spacing his attacks so only the tip of the Falchion connects yields immense power.'),
+
+-- 20. Mr. Game & Watch
+('When Mr. Game & Watch uses his Side Special (Judge), which number guarantees a devastating, almost certain KO?', '7', '8', '9', '1', 'C', 'SSBU - Mr. Game & Watch', 'Easy', 'Rolling a 9 on Judge produces a loud "ping" sound and deals massive damage and knockback, usually resulting in a KO.'),
+
+-- 21. Ganondorf
+('In Super Smash Bros. Ultimate, Ganondorf finally uses a weapon for all of his Smash Attacks. What is it?', 'A Trident', 'A massive Greatsword', 'Twin Gerudo Scimitars', 'A dark magic staff', 'B', 'SSBU - Ganondorf', 'Medium', 'After years of using only his fists and magic, Ultimate updated Ganondorf to wield his heavy Greatsword for his Smash attacks.'),
+
+-- 22. Falco
+('How does Falco''s Blaster (Neutral Special) differ significantly from Fox''s Blaster?', 'It travels much faster', 'It passes through shields', 'It causes opponents to flinch', 'It heals Falco slightly on hit', 'C', 'SSBU - Falco', 'Medium', 'Unlike Fox''s laser which just tacks on damage, Falco''s laser causes hitstun (flinching), making it a great disruption tool.'),
+
+-- 23. Wario
+('How does Wario charge up his powerful Down Special, the Wario Waft?', 'By dealing damage', 'By taking damage', 'Simply by passing time during the match', 'By taunting', 'C', 'SSBU - Wario', 'Medium', 'The Wario Waft charges passively over time. After almost two minutes without using it, it becomes a devastating, fully-charged blast.'),
+
+-- 24. Meta Knight
+('Besides his Up Special, what makes Meta Knight''s recovery exceptionally strong?', 'He has 5 mid-air jumps', 'He takes no damage off-stage', 'He can wall-cling indefinitely', 'He floats like Peach', 'A', 'SSBU - Meta Knight', 'Easy', 'With his bat-like wings, Meta Knight has 5 distinct mid-air jumps, allowing him to stay off-stage for a long time.'),
+
+-- 25. Pit
+('What unique property do Pit''s arrows (Palutena Bow) possess?', 'They pierce through multiple enemies', 'They can be curved significantly in mid-air', 'They explode on impact', 'They instantly freeze the opponent', 'B', 'SSBU - Pit', 'Medium', 'Players can guide and curve Pit''s arrows up or down after firing them, making them excellent for chasing opponents off-stage.'),
+
+-- 26. Zero Suit Samus
+('What does Zero Suit Samus wear to enhance the power of her kicks?', 'Gravity Boots', 'Jet Boots', 'Spring Heels', 'Morph Tech Greaves', 'B', 'SSBU - Zero Suit Samus', 'Easy', 'She wears Jet Boots, which use propulsion to give her kicks fiery properties and incredibly high knockback.'),
+
+-- 27. Olimar
+('In Super Smash Bros. Ultimate, what is the maximum number of Pikmin Olimar can have following him at once?', '3', '4', '5', '6', 'A', 'SSBU - Olimar', 'Hard', 'While he could hold 6 in Brawl, his maximum Pikmin count was reduced to 3 from Smash 4 onwards.'),
+
+-- 28. Diddy Kong
+('Which item does Diddy Kong generate to trip his opponents using his Down Special?', 'A Green Shell', 'A Banana Peel', 'A Barrel', 'A Peanut', 'B', 'SSBU - Diddy Kong', 'Easy', 'He tosses a Banana Peel, an item that automatically trips any grounded opponent who walks over it.'),
+
+-- 29. King Dedede
+('What kind of spiky projectile does King Dedede hit with his hammer for his Side Special?', 'A Spiny', 'A Gordo', 'A Spike Top', 'A Bowser Shell', 'B', 'SSBU - King Dedede', 'Easy', 'He tosses and hits a Gordo, a classic Kirby enemy. However, it can be hit back at him by opponents.'),
+
+-- 30. Ike
+('What is the name of Ike''s Up Special, where he throws his sword into the air and crashes down to catch it?', 'Eruption', 'Quick Draw', 'Aether', 'Counter', 'C', 'SSBU - Ike', 'Medium', 'Aether acts as both an attack and a recovery, though its heavy downward strike can be risky if used off-stage.'),
+
+-- 31. Lucario
+('Lucario''s attacks become significantly stronger through which unique mechanic?', 'The Rage meter', 'The Aura mechanic', 'The Limit gauge', 'The Focus mechanic', 'B', 'SSBU - Lucario', 'Easy', 'Because of his Aura, Lucario''s attacks deal more damage and knockback the higher his own damage percentage is.'),
+
+-- 32. R.O.B.
+('What spinning item does R.O.B. launch and leave on the stage with his Down Special?', 'A Top', 'A Gyro', 'A Disk', 'A Cog', 'B', 'SSBU - R.O.B.', 'Easy', 'R.O.B. launches a Gyro. Only one can be on the stage at a time, and it acts as an item that anyone can pick up.'),
+
+-- 33. Toon Link
+('Which of these is Toon Link''s Down Special?', 'Spin Attack', 'Boomerang', 'Bomb', 'Hero''s Bow', 'C', 'SSBU - Toon Link', 'Easy', 'Toon Link pulls a Bomb, which he can hold, throw, or drop. It explodes after a short fuse or on impact.'),
+
+-- 34. Charizard
+('Which of Charizard''s attacks causes it to take recoil damage upon use?', 'Flamethrower', 'Fly', 'Rock Smash', 'Flare Blitz', 'D', 'SSBU - Charizard', 'Medium', 'Flare Blitz (Side Special) is an extremely powerful, fiery dash, but Charizard takes recoil damage every time it is executed.'),
+
+-- 35. Sonic
+('What is Sonic''s Down Special, where he charges in place before revving forward in a ball?', 'Homing Attack', 'Spin Charge', 'Spring Jump', 'Spin Dash', 'B', 'SSBU - Sonic', 'Hard', 'His Down Special is Spin Charge (requiring multiple button taps), while his Side Special is Spin Dash (requiring one held press).'),
+
+-- 36. Jigglypuff
+('What highly unique and fatal mechanic happens to Jigglypuff if its shield breaks?', 'It falls asleep indefinitely', 'It takes 50% damage instantly', 'It is launched straight upward, almost guaranteeing a KO', 'It cannot use Rest for the remainder of the stock', 'C', 'SSBU - Jigglypuff', 'Medium', 'As the "balloon" Pokémon, a popped shield causes Jigglypuff to shoot violently up into the sky blast zone.'),
+
+-- 37. Dr. Mario
+('What type of projectile does Dr. Mario throw with his Neutral Special?', 'Syringes', 'Megavitamins (Pills)', 'Stethoscopes', 'Viruses', 'B', 'SSBU - Dr. Mario', 'Easy', 'Instead of Mario''s bouncing fireballs, Dr. Mario tosses bicolored Megavitamins that bounce differently and sound heavier.'),
+
+-- 38. Lucina
+('How does Lucina''s sword mechanically differ from her Echo Fighter counterpart, Marth?', 'It is entirely a sweetspot at the base', 'It deals fire damage', 'Her sword deals consistent damage across the entire blade', 'It breaks shields faster', 'C', 'SSBU - Lucina', 'Medium', 'Unlike Marth, who requires spacing to hit with the tip of his sword, Lucina''s Parallel Falchion lacks a tipper and does uniform damage.'),
+
+-- 39. Dark Pit
+('While Pit uses the Palutena Bow, what distinct weapon does Dark Pit use for his Side Special?', 'Dark Pit Staff', 'Electroshock Arm', 'Silver Bow', 'Guardian Orbitars', 'B', 'SSBU - Dark Pit', 'Medium', 'Dark Pit dashes forward with the Electroshock Arm, which launches opponents at a lower, more horizontal angle than Pit''s Upperdash Arm.'),
+
+-- 40. Rosalina & Luma
+('What happens to Luma if it takes too much damage during a fight?', 'It turns against Rosalina', 'It explodes, damaging opponents', 'It faints and reappears after a short cooldown', 'It becomes invincible', 'C', 'SSBU - Rosalina & Luma', 'Medium', 'Luma has its own set of HP. If defeated, Rosalina is left vulnerable to fight completely alone until a new Luma respawns a few seconds later.'),
+
+-- 41. Wii Fit Trainer
+('Which move allows Wii Fit Trainer to heal herself and temporarily boost her attack power?', 'Sun Salutation', 'Header', 'Deep Breathing', 'Super Hoop', 'C', 'SSBU - Wii Fit Trainer', 'Medium', 'Her Down Special, Deep Breathing, requires a timed button press. If successful, it heals her slightly and gives a temporary buff to all her stats.'),
+
+-- 42. Little Mac
+('What gauge builds up as Little Mac deals and receives damage?', 'The Limit Gauge', 'The Power Meter', 'The KO Gauge', 'The Star Punch Meter', 'C', 'SSBU - Little Mac', 'Easy', 'Once the KO Gauge is full, his standard Neutral Special is replaced by the unblockable, devastating KO Uppercut.'),
+
+-- 43. Villager
+('Villager''s Neutral Special, "Pocket", allows him to do what?', 'Pull random items out of his pockets', 'Grab incoming projectiles and store them to throw back later', 'Hide from attacks temporarily', 'Bury items in the ground', 'B', 'SSBU - Villager', 'Easy', 'Pocket gives Villager the ability to catch projectiles (or even items) and hold them safely until the player presses the button again to return fire.'),
+
+-- 44. Palutena
+('Which move does Palutena use to automatically target an opponent in front of her?', 'Explosive Flame', 'Warp', 'Autoreticle', 'Heavenly Light', 'C', 'SSBU - Palutena', 'Easy', 'Her Neutral Special, Autoreticle, locks onto an opponent''s position and fires three homing energy bursts.'),
+
+-- 45. Robin
+('What mechanic heavily restricts Robin''s use of smash attacks and special moves?', 'A stamina bar', 'A durability system (they break and must respawn)', 'A cooldown timer for every move', 'A limit gauge', 'B', 'SSBU - Robin', 'Medium', 'Staying true to Fire Emblem mechanics, Robin''s Levin Sword and spell Tomes have limited uses. Once depleted, they are discarded and take time to recharge.'),
+
+-- 46. Duck Hunt
+('Duck Hunt''s Down Special summons characters from which classic NES game?', 'Hogan''s Alley', 'Wild Gunman', 'Gumshoe', 'Barker Bill''s Trick Shooting', 'B', 'SSBU - Duck Hunt', 'Hard', 'The Down Special summons 8-bit outlaws from the NES Zapper game Wild Gunman, who shoot after a delay.'),
+
+-- 47. Bowser Jr.
+('Bowser Jr. takes less damage when hit where?', 'On his head', 'On his Clown Car', 'From behind', 'While in the air', 'B', 'SSBU - Bowser Jr.', 'Hard', 'Attacks that strike the Junior Clown Car deal slightly less damage, while attacks that hit Bowser Jr.''s actual body deal slightly more damage.'),
+
+-- 48. Shulk
+('Which of these is NOT one of Shulk''s Monado Arts?', 'Jump', 'Shield', 'Smash', 'Heal', 'D', 'SSBU - Shulk', 'Medium', 'Shulk''s five Monado Arts are Jump, Speed, Shield, Buster, and Smash. Each grants a massive buff to one stat while nerfing others.'),
+
+-- 49. Greninja
+('What object does Greninja leave behind when using its Down Special counter, Substitute?', 'A log or a substitute doll', 'A puddle of water', 'A smoke bomb', 'A shuriken', 'A', 'SSBU - Greninja', 'Easy', 'Upon successfully countering, Greninja vanishes and leaves behind a plush Substitute doll or a log before counter-attacking from a directional angle.'),
+
+-- 50. PAC-MAN
+('What is the final, most powerful item in PAC-MAN''s Bonus Fruit cycle?', 'The Bell', 'The Key', 'The Melon', 'The Galaxian Flagship', 'B', 'SSBU - PAC-MAN', 'Medium', 'The Key is the last item in the cycle. It flies straight forward at incredible speed and deals massive knockback.'),
+
+-- 51. Mega Man
+('Mega Man''s standard jab, forward tilt, and neutral air all use the exact same weapon. What is it?', 'Metal Blade', 'Mega Buster (Lemons)', 'Crash Bomber', 'Leaf Shield', 'B', 'SSBU - Mega Man', 'Medium', 'He fires three quick solar bullets (colloquially called "lemons" by the community) from his Mega Buster while walking, standing, or jumping.'),
+
+-- 52. Mewtwo
+('Mewtwo''s Down Special, Disable, only works if what condition is met?', 'The opponent is facing Mewtwo', 'The opponent is at 100% damage or more', 'The opponent is charging a smash attack', 'Mewtwo is at higher damage than the opponent', 'A', 'SSBU - Mewtwo', 'Hard', 'Disable shoots a flash of light from Mewtwo''s eyes. It will only stun the opponent if they are grounded and facing directly at Mewtwo.'),
+
+-- 53. Ryu
+('Ryu has light, medium, and heavy variations of his standard attacks. How are they executed?', 'By holding different directional inputs', 'Based on how long the attack button is pressed/held', 'By inputting command motions', 'By pressing the trigger buttons simultaneously', 'B', 'SSBU - Ryu', 'Hard', 'Tapping the attack button yields a light attack, while holding it down slightly longer performs a heavier, more damaging version of the move.'),
+
+-- 54. Lucas
+('What animal does Lucas use to tether recover to ledges?', 'A frog', 'A Rope Snake', 'A vine', 'A Mr. Saturn', 'B', 'SSBU - Lucas', 'Easy', 'Lucas uses his faithful Rope Snake for grabs, mid-air Z-airs, and tethering to ledges.'),
+
+-- 55. Roy
+('Unlike Marth, where is the "sweetspot" on Roy''s Sword of Seals?', 'The tip', 'The middle', 'The hilt (base)', 'The very edge of the hitbox', 'C', 'SSBU - Roy', 'Medium', 'Roy is designed as an in-your-face rushdown fighter; his sword deals maximum fire damage and knockback at the hilt, closest to his body.'),
+
+-- 56. Cloud
+('What happens when Cloud''s Limit Gauge is completely full?', 'He becomes invincible for 10 seconds', 'His movement speed drops but defense rises', 'His Special Moves become powered-up, one-time-use Limit Breaks', 'He instantly heals 30%', 'C', 'SSBU - Cloud', 'Easy', 'A full Limit Gauge gives Cloud a blue aura, increases his mobility, and upgrades his next Special Move into a devastating Limit Break version.'),
+
+-- 57. Bayonetta
+('What is the name of Bayonetta''s Down Special counter that slows opponents down?', 'Bat Within', 'Witch Time', 'Wicked Weave', 'Infernal Climax', 'B', 'SSBU - Bayonetta', 'Easy', 'Witch Time severely slows down any opponent who attacks her during the counter window, allowing for massive combo punishes.'),
+
+-- 58. Corrin
+('What unique weapon does Corrin use for his Side Special (Dragon Lunge)?', 'He throws a spear', 'He morphs his arm into a lance and pins opponents to the ground', 'He fires a massive water blast', 'He swings a chainsaw sword', 'B', 'SSBU - Corrin', 'Medium', 'Dragon Lunge transforms Corrin''s arm into a dragon appendage, stabbing forward. If it hits the ground or a wall, he pins himself there and can unleash a followup kick.'),
+
+-- 59. Chrom
+('Chrom''s Up Special, "Soaring Slash", is functionally a clone of whose Up Special?', 'Marth', 'Roy', 'Ike', 'Lucina', 'C', 'SSBU - Chrom', 'Hard', 'Despite being an Echo Fighter of Roy, Chrom''s Up Special acts like Ike''s "Aether", where he leaps into the air and crashes back down.'),
+
+-- 60. Daisy
+('Daisy is the Echo Fighter of which character?', 'Peach', 'Rosalina', 'Zelda', 'Palutena', 'A', 'SSBU - Daisy', 'Easy', 'Daisy is Peach''s Echo Fighter, sharing the exact same moveset but featuring different animations and visual effects.'),
+
+-- 61. Incineroar
+('Incineroar''s Down Special (Revenge) is a counter. What happens when he successfully counters an attack?', 'He immediately strikes back', 'He heals himself', 'He absorbs the blow and glows, buffing his next attack', 'He switches places with the opponent', 'C', 'SSBU - Incineroar', 'Medium', 'Instead of striking back immediately, Revenge absorbs the hit and drastically increases the damage and knockback of Incineroar''s next landed attack.'),
+
+-- 62. Inkling
+('What is the benefit of covering an opponent in Ink?', 'It slows down their movement speed', 'It prevents them from jumping', 'It causes them to take significantly more damage from your attacks', 'It disables their special moves', 'C', 'SSBU - Inkling', 'Medium', 'The more an opponent is coated in Ink, the higher the damage multiplier they suffer when hit by Inkling''s attacks.'),
+
+-- 63. Ken
+('How does Ken''s heavy Shoryuken differ from Ryu''s?', 'It travels completely horizontally', 'It hits multiple times and sets the opponent on fire', 'It acts as a projectile', 'It has super armor', 'B', 'SSBU - Ken', 'Medium', 'True to Street Fighter lore, Ken''s heavy Shoryuken is a multi-hit flaming uppercut, whereas Ryu''s is a powerful single-hit strike.'),
+
+-- 64. King K. Rool
+('King K. Rool has a passive "Belly Armor" that protects him during certain attacks. What happens if it breaks?', 'He takes double damage', 'He becomes dizzy and vulnerable, similar to a shield break', 'He loses his crown', 'He cannot use Smash attacks', 'B', 'SSBU - King K. Rool', 'Medium', 'If the golden belly armor takes too much damage and shatters, K. Rool is put into an instant dizzy state, leaving him wide open to a Smash attack.'),
+
+-- 65. Ice Climbers
+('What are the names of the two Ice Climbers?', 'Tim and Nina', 'Popo and Nana', 'Kip and Pip', 'Todd and Toadette', 'B', 'SSBU - Ice Climbers', 'Easy', 'The duo consists of Popo (in blue) and Nana (in pink). The player controls Popo, while the CPU controls Nana to shadow his movements.'),
+
+-- 66. Ivysaur
+('Which of Ivysaur''s moves can "sweetspot" at the very tip for a massive explosion of knockback?', 'Neutral B (Bullet Seed)', 'Down Air', 'Up Special (Vine Whip) and Up Air', 'Side B (Razor Leaf)', 'C', 'SSBU - Ivysaur', 'Hard', 'Both Vine Whip and Up-Air possess an incredibly lethal sweetspot at the very tip of the bulb/vine.'),
+
+-- 67. Squirtle
+('What is Squirtle''s Side Special?', 'Water Gun', 'Surf', 'Withdraw', 'Aqua Jet', 'C', 'SSBU - Squirtle', 'Easy', 'Squirtle retreats into its shell and slides rapidly across the stage, granting it armor against weak attacks.'),
+
+-- 68. Pichu
+('What is the major drawback to playing as Pichu?', 'It is the slowest character', 'It damages itself every time it uses an electric attack', 'It cannot jump', 'It has no shield', 'B', 'SSBU - Pichu', 'Easy', 'True to its Pokédex entries, Pichu''s body cannot handle its own electricity, meaning it takes a small amount of recoil damage when using electric attacks.'),
+
+-- 69. Simon
+('Which classic Castlevania sub-weapon does Simon use for his Side Special?', 'Axe', 'Holy Water', 'Cross', 'Stopwatch', 'C', 'SSBU - Simon', 'Medium', 'He throws the Cross, which flies forward and then acts like a boomerang, returning to him.'),
+
+-- 70. Richter
+('How does Richter''s Holy Water (Down Special) mechanically differ from Simon''s?', 'It travels further', 'It deals Aura damage instead of Fire damage', 'It cannot be absorbed by Ness/Lucas', 'It causes the opponent to trip', 'B', 'SSBU - Richter', 'Hard', 'While functionally identical in hitbox, Simon''s Holy Water deals Fire damage, whereas Richter''s blue flame deals Aura damage (which means Red Pikmin are NOT immune to it).'),
+
+-- 71. Ridley
+('What happens when Ridley perfectly lands the "sweetspot" of his Down Special (Skewer)?', 'It instantly KOs the opponent', 'It deals massive damage, collapsing the opponent directly to the ground', 'It heals Ridley for 50%', 'It steals the opponent''s item', 'B', 'SSBU - Ridley', 'Medium', 'The Skewer tail stab deals an enormous ~60% damage and causes a crumpled fall, but it has almost zero knockback.'),
+
+-- 72. Snake
+('What vehicle does Snake hang onto for his Up Special recovery?', 'A Fulton Balloon', 'The Cypher', 'A Helicopter ladder', 'A cardboard box attached to a drone', 'B', 'SSBU - Snake', 'Easy', 'Snake grabs onto the Cypher, a small flying reconnaissance drone from Metal Gear Solid 2, to lift himself up.'),
+
+-- 73. Isabelle
+('What item does Isabelle use for her Side Special to grab opponents from afar?', 'A Bug Net', 'A Slingshot', 'A Fishing Rod', 'A Watering Can', 'C', 'SSBU - Isabelle', 'Easy', 'She casts a Fishing Rod. If the bobber hooks an opponent, she reels them in and can throw them in one of four directions.'),
+
+-- 74. Dark Samus
+('How does Dark Samus''s dodge roll visually differ from Samus''s?', 'She turns invisible', 'She floats effortlessly sideways instead of curling into a Morph Ball', 'She leaves a trail of Phazon', 'She teleports', 'B', 'SSBU - Dark Samus', 'Medium', 'Unlike Samus, who tightly rolls into a ball, Dark Samus simply glides/floats left and right while dodging.'),
+
+-- 75. Wolf
+('Wolf''s Down Special (Reflector) differs from Fox''s and Falco''s in what major way?', 'It is entirely red', 'It heals him', 'It increases the speed and power of reflected projectiles immensely', 'It is a permanent shield', 'C', 'SSBU - Wolf', 'Hard', 'Wolf''s Reflector has less active frames and does not hold opponents in place, but it applies the highest damage/speed multiplier to reflected projectiles of the three spacies.'),
+
+-- 76. Young Link
+('What kind of arrows does Young Link shoot with his Neutral Special?', 'Light Arrows', 'Ice Arrows', 'Fire Arrows', 'Bomb Arrows', 'C', 'SSBU - Young Link', 'Easy', 'Unlike Link (normal arrows) and Toon Link (normal arrows), Young Link fires flaming arrows that result in multi-hit fire damage.'),
+
+-- 77. Piranha Plant
+('Piranha Plant''s Neutral Special (Ptooie) involves blowing what object into the air?', 'A fireball', 'A spiked metal ball', 'A poison cloud', 'A Goomba', 'B', 'SSBU - Piranha Plant', 'Easy', 'It balances a heavy spiked ball in the air using its breath, which can be dropped or blown left/right to crush opponents.'),
+
+-- 78. Joker
+('When Joker fills his Rebellion Gauge, what Persona does he summon to empower his attacks?', 'Jack Frost', 'Carmen', 'Arsene', 'Pixie', 'C', 'SSBU - Joker', 'Easy', 'Taking damage or using Rebel''s Guard fills his gauge, summoning Arsene to drastically buff his damage, knockback, and special moves.'),
+
+-- 79. Hero
+('Hero''s Down Special, Command Selection, brings up a menu of how many randomly selected spells?', '2', '3', '4', '8', 'C', 'SSBU - Hero', 'Easy', 'It pulls up an RPG-style menu with 4 randomly generated spells from a vast pool, requiring the player to read and react quickly.'),
+
+-- 80. Banjo & Kazooie
+('Banjo & Kazooie''s Side Special (Wonderwing) grants them complete invincibility during the dash. However, it is limited by what resource?', 'Mana', 'Golden Feathers', 'Eggs', 'Jiggies', 'B', 'SSBU - Banjo & Kazooie', 'Medium', 'They start each stock with only 5 Golden Feathers. Once all 5 are used, Wonderwing will fail until the player loses a stock.'),
+
+-- 81. Terry
+('What happens to Terry when his damage percentage crosses 100% (or his stamina drops low)?', 'He enters a fatigue state', 'A "GO!" icon appears, granting him access to two Super Special Moves', 'He gains super armor on all attacks', 'He loses his hat', 'B', 'SSBU - Terry', 'Easy', 'Reaching high damage activates his "GO!" mechanic, allowing him to use Buster Wolf and Power Geyser infinitely until he dies.'),
+
+-- 82. Byleth
+('Byleth uses four Heroes'' Relics. Which weapon is mapped to their devastating Down Special attack?', 'Sword of the Creator', 'Failnaught', 'Areadbhar', 'Aymr', 'D', 'SSBU - Byleth', 'Medium', 'The Down Special uses Aymr, a heavy axe that takes a long time to swing but grants super armor and breaks shields instantly.'),
+
+-- 83. Min Min
+('What does Min Min''s Down Special do?', 'Counters attacks', 'Charges a laser', 'Switches the ARMS weapon on her right arm', 'Throws a bowl of ramen', 'C', 'SSBU - Min Min', 'Easy', 'Her Down B simply cycles her right arm between three different weapons: the Ramram, the Megawatt, and the Dragon.'),
+
+-- 84. Steve
+('Steve relies heavily on his Neutral B to do what in order to upgrade his weapons?', 'Eat food', 'Mine materials from the ground', 'Place torches', 'Tame wolves', 'B', 'SSBU - Steve', 'Easy', 'Steve must actively mine the stage for dirt, wood, stone, iron, gold, and diamond to craft tools, as his weapons break over time.'),
+
+-- 85. Sephiroth
+('What passive mechanic activates when Sephiroth is at a disadvantage (usually high damage)?', 'He turns invisible', 'He equips the Black Materia', 'He sprouts a single black wing, giving him super armor on Smash attacks, an extra jump, and higher speed', 'He regains all his health', 'C', 'SSBU - Sephiroth', 'Medium', 'The One-Winged Angel form kicks in based on the stock deficit and his damage, severely buffing his mobility and granting armor on his Smash attacks.'),
+
+-- 86. Pyra
+('What does Pyra''s Down Special do?', 'Counters attacks', 'Fires a laser from the Aegis', 'Swaps her out for Mythra', 'Creates a ring of fire', 'C', 'SSBU - Pyra', 'Easy', 'Like Zelda and Sheik in older games, Pyra and Mythra use Down Special to seamlessly swap places with one another.'),
+
+-- 87. Mythra
+('Mythra possesses a passive defensive mechanic called "Foresight". How is it triggered?', 'By parrying a projectile', 'By dodging an attack at the very last possible frame', 'By standing perfectly still', 'By charging a smash attack completely', 'B', 'SSBU - Mythra', 'Hard', 'If Mythra spot-dodges, rolls, or air-dodges just before an attack hits, Foresight triggers, heavily slowing down the opponent and negating her dodge lag.'),
+
+-- 88. Kazuya
+('Kazuya features a comeback mechanic known as "Rage". What happens when it is active?', 'He gains a red aura, higher damage, and access to a one-time devastating command grab (Rage Drive)', 'He constantly loses health but deals double damage', 'His attacks become unblockable', 'He turns into Devil Kazuya permanently', 'A', 'SSBU - Kazuya', 'Medium', 'At 100% damage, Kazuya enters Rage. This buffs his attack power and allows him to use the extremely powerful Rage Drive, which consumes the aura upon use.'),
+
+-- 89. Sora
+('Sora''s Neutral Special cycles strictly between which three spells?', 'Fire, Blizzard, Thunder', 'Firaga, Thundaga, Blizzaga', 'Aero, Cure, Stop', 'Gravity, Magnet, Reflect', 'B', 'SSBU - Sora', 'Medium', 'Sora cycles through the top-tier Kingdom Hearts spells in a fixed order: Firaga (multiple fireballs), Thundaga (three lightning strikes), and Blizzaga (freezing spread).');
