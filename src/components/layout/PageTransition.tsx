@@ -21,7 +21,7 @@ export function PageTransition({
   const [displayedKey, setDisplayedKey] = useState(pageKey)
   const [displayedChildren, setDisplayedChildren] = useState(children)
   const [phase, setPhase] = useState<'idle' | 'exit' | 'enter'>('idle')
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     // Same page — just update children in place (no transition).
