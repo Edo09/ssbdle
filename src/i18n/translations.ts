@@ -209,7 +209,7 @@ const es: typeof en = {
     errUserChars: 'Solo letras, números y _',
   },
   leaderboard: {
-    title: 'Clasificaciones',
+    title: 'Ranking',
     subtitle: 'Jugadores registrados, por modo.',
     empty: 'Aún no hay jugadores. ¡Sé el primero!',
     dailyGuide: 'Racha actual, mejor racha y victorias acumuladas en Diario.',

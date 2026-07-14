@@ -18,9 +18,11 @@ const KEY_TO_COL: Record<string, string> = {
 export function AttributeCell({
   attr,
   index,
+  animate = true,
 }: {
   attr: Attribute
   index: number
+  animate?: boolean
 }) {
   const { t, lang } = useI18n()
   const isCorrect = attr.status === 'correct'
@@ -46,14 +48,15 @@ export function AttributeCell({
   return (
     <div
       className={cn(
-        'tile-reveal relative flex min-h-12 items-center justify-center rounded-lg border px-1 py-1.5 text-center sm:min-h-14',
+        'relative flex min-h-12 items-center justify-center rounded-lg border px-1 py-1.5 text-center sm:min-h-14',
+        animate && 'tile-reveal',
         isCorrect
           ? 'border-correct/40 bg-correct/90 text-correct-foreground'
           : isPartial
             ? 'border-partial/40 bg-partial/90 text-partial-foreground'
             : 'border-border bg-absent text-absent-foreground',
       )}
-      style={{ animationDelay: `${index * 400}ms` }}
+      style={animate ? { animationDelay: `${index * 400}ms` } : undefined}
     >
       {isCorrect && (
         <Check className="absolute right-1 top-1 size-3 opacity-80" aria-hidden />

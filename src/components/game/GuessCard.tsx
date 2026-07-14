@@ -50,12 +50,12 @@ function Chip({ attr, span }: { attr?: Attribute; span?: boolean }) {
   )
 }
 
-export function GuessCard({ result }: { result: GuessResult }) {
+export function GuessCard({ result, animate = true }: { result: GuessResult; animate?: boolean }) {
   const byKey = (k: string) => result.attributes.find((a) => a.key === k)
   const universe = String(byKey('universe')?.guess ?? '')
 
   return (
-    <div className="tile-reveal rounded-xl border border-border bg-card p-2.5">
+    <div className={cn("rounded-xl border border-border bg-card p-2.5", animate && "tile-reveal")}>
       <div className="mb-2 flex items-center gap-2">
         <CharacterAvatar
           name={result.guess.name}

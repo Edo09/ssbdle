@@ -76,17 +76,6 @@ export function Header({
             </span>
           </div>
 
-          <Button
-            variant="secondary"
-            size="icon"
-            onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
-            className="border-accent/30 bg-accent/10 text-accent hover:bg-accent/20"
-            aria-label={t('header.switchLanguage')}
-            title={t('header.switchLanguage')}
-          >
-            <Languages />
-          </Button>
-
           <button
             type="button"
             onClick={onOpenLeaderboard}
@@ -97,6 +86,17 @@ export function Header({
             <span className="hidden sm:inline">{t('leaderboard.title')}</span>
           </button>
 
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+            className="border-accent/30 bg-accent/10 text-accent hover:bg-accent/20"
+            aria-label={t('header.switchLanguage')}
+            title={t('header.switchLanguage')}
+          >
+            <Languages />
+          </Button>
+          
           {user ? (
             <div className="flex items-center gap-1.5">
               <span className="hidden max-w-28 truncate text-sm font-semibold sm:inline">
