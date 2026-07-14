@@ -183,7 +183,7 @@
   border-radius: 2px;
   opacity: 0;
   animation: confetti-fall var(--cf-duration, 3.2s) var(--cf-delay, 0s)
-    ease-in 2 both;
+    ease-in infinite both;
 }
 @keyframes confetti-fall {
   0% {
