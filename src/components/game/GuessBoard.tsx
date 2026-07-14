@@ -88,7 +88,7 @@ export function GuessBoard({
                 onClick={onGiveUp}
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground"
+                className="border border-destructive bg-destructive/35 text-destructive-foreground shadow-[0_0_14px_-8px_var(--destructive)] hover:bg-destructive/50"
               >
                 <Flag /> {t('common.giveUp')}
               </Button>
