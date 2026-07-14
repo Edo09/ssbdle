@@ -98,10 +98,12 @@ export async function revealArcadeAnswer(roundId: string): Promise<Character> {
 export async function getRandomTrivia(opts?: {
   category?: string
   difficulty?: string
+  exclude?: number[]
 }): Promise<TriviaQuestion | null> {
   const { data, error } = await supabase.rpc('get_random_trivia', {
     p_category: opts?.category ?? null,
     p_difficulty: opts?.difficulty ?? null,
+    p_exclude: opts?.exclude ?? [],
   })
   if (error) throw new Error(error.message)
   const rows = z.array(TriviaQuestionSchema).parse(data ?? [])

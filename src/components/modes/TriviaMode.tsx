@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { BrainCircuit, Check, RotateCcw, X } from 'lucide-react'
 import type { TriviaQuestion, TriviaResult } from '@/types/game'
@@ -26,13 +26,18 @@ export function TriviaMode() {
   const user = useAuthStore((s) => s.user)
   const refreshStats = useGameStore((s) => s.refreshServerStats)
 
+  // Question ids already shown this session, so we don't repeat them.
+  const seenRef = useRef<number[]>([])
+
   const load = useCallback(async () => {
     setLoading(true)
     setChoice(null)
     setResult(null)
     setError(null)
     try {
-      setQuestion(await getRandomTrivia())
+      const q = await getRandomTrivia({ exclude: seenRef.current })
+      setQuestion(q)
+      if (q) seenRef.current = [...seenRef.current, q.id].slice(-100)
     } catch (e) {
       setError((e as Error).message)
     } finally {
