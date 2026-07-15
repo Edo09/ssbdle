@@ -15,7 +15,6 @@ export function DailyMode() {
   const daily = useGameStore((s) => s.daily)
   const submitting = useGameStore((s) => s.submittingDaily)
   const submitGuess = useGameStore((s) => s.submitDailyGuess)
-  const giveUp = useGameStore((s) => s.giveUpDaily)
 
   const prettyDate = new Date(todayUTC() + 'T00:00:00Z').toLocaleDateString(
     lang === 'es' ? 'es-ES' : 'en-US',
@@ -56,8 +55,6 @@ export function DailyMode() {
           maxGuesses={MAX_GUESSES}
           mode="daily"
           onGuess={submitGuess}
-          onGiveUp={giveUp}
-          giveUpAnytime
         />
       )}
     </section>
