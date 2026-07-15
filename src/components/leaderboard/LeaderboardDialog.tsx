@@ -429,6 +429,13 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     meLabel={meLabel}
                     metrics={[
                       {
+                        icon: Trophy,
+                        label: t('leaderboard.bestRun'),
+                        value: r.best_run ?? 0,
+                        detail: t('leaderboard.points'),
+                        tone: 'text-yellow',
+                      },
+                      {
                         icon: BrainCircuit,
                         label: t('leaderboard.correct'),
                         value: r.correct,

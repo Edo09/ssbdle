@@ -79,6 +79,66 @@ export const TriviaResultSchema = z.object({
 })
 export type TriviaResult = z.infer<typeof TriviaResultSchema>
 
+/* --------------------------- Trivia runs ------------------------------ */
+
+/** Response of start_trivia_run — a fresh run with its first question. */
+export const TriviaStartSchema = z.object({
+  session_id: z.coerce.number(),
+  token: z.string(),
+  length: z.coerce.number(),
+  index: z.coerce.number(),
+  score: z.coerce.number(),
+  question: TriviaQuestionSchema,
+})
+export type TriviaStart = z.infer<typeof TriviaStartSchema>
+
+/** Response of submit_trivia_guess. correct_option only present when solved. */
+export const TriviaSubmitSchema = z.object({
+  status: z.string(),
+  correct: z.boolean(),
+  attempts: z.coerce.number(),
+  score: z.coerce.number().optional(),
+  session_score: z.coerce.number(),
+  can_next: z.boolean(),
+  correct_option: z.string().optional(),
+  explanation: z.string().nullable().optional(),
+  eliminated: z.array(z.string()).optional(),
+})
+export type TriviaSubmit = z.infer<typeof TriviaSubmitSchema>
+
+/** Response of giveup_trivia — reveals the answer for 0 points. */
+export const TriviaRevealSchema = z.object({
+  status: z.string(),
+  correct_option: z.string(),
+  explanation: z.string().nullable().optional(),
+  score: z.coerce.number(),
+  can_next: z.boolean(),
+})
+export type TriviaReveal = z.infer<typeof TriviaRevealSchema>
+
+/** Response of skip_trivia. */
+export const TriviaSkipSchema = z.object({
+  status: z.string(),
+  can_next: z.boolean(),
+})
+export type TriviaSkip = z.infer<typeof TriviaSkipSchema>
+
+/** Response of next_trivia — either the next question or the run summary. */
+export const TriviaNextSchema = z.object({
+  finished: z.boolean(),
+  index: z.coerce.number().optional(),
+  score: z.coerce.number().optional(),
+  question: TriviaQuestionSchema.optional(),
+  summary: z
+    .object({
+      score: z.coerce.number(),
+      length: z.coerce.number(),
+      correct: z.coerce.number(),
+    })
+    .optional(),
+})
+export type TriviaNext = z.infer<typeof TriviaNextSchema>
+
 /* ---------------------------- Leaderboards ---------------------------- */
 
 export const DailyLeaderRowSchema = z.object({
@@ -107,6 +167,11 @@ export const TriviaLeaderRowSchema = z.object({
   correct: z.number(),
   answered: z.number(),
   accuracy_pct: z.coerce.number().nullable(),
+  // Added by the trivia-runs migration; optional so the UI still parses
+  // rows from the older view until that migration is applied.
+  best_run: z.coerce.number().nullable().optional(),
+  total_points: z.coerce.number().nullable().optional(),
+  runs: z.coerce.number().nullable().optional(),
 })
 export type TriviaLeaderRow = z.infer<typeof TriviaLeaderRowSchema>
 

@@ -8,8 +8,13 @@ import {
   PlayerStatsSchema,
   RunLeaderRowSchema,
   TriviaLeaderRowSchema,
+  TriviaNextSchema,
   TriviaQuestionSchema,
   TriviaResultSchema,
+  TriviaRevealSchema,
+  TriviaSkipSchema,
+  TriviaStartSchema,
+  TriviaSubmitSchema,
   type ArcadeLeaderRow,
   type Character,
   type DailyLeaderRow,
@@ -18,8 +23,13 @@ import {
   type RunLeaderRow,
   type RunVariantValue,
   type TriviaLeaderRow,
+  type TriviaNext,
   type TriviaQuestion,
+  type TriviaReveal,
   type TriviaResult,
+  type TriviaSkip,
+  type TriviaStart,
+  type TriviaSubmit,
 } from '@/types/game'
 import { z } from 'zod'
 
@@ -160,6 +170,67 @@ export async function checkTriviaAnswer(
     p_choice: choice,
   })
   return unwrap(data, error, TriviaResultSchema)
+}
+
+/* --------------------------- Trivia Run mode -------------------------- */
+
+export async function startTriviaRun(opts?: {
+  length?: number
+  category?: string
+  difficulty?: string
+}): Promise<TriviaStart> {
+  const { data, error } = await supabase.rpc('start_trivia_run', {
+    p_length: opts?.length ?? 10,
+    p_category: opts?.category ?? null,
+    p_difficulty: opts?.difficulty ?? null,
+  })
+  return unwrap(data, error, TriviaStartSchema)
+}
+
+export async function submitTriviaGuess(
+  sessionId: number,
+  token: string,
+  choice: string,
+): Promise<TriviaSubmit> {
+  const { data, error } = await supabase.rpc('submit_trivia_guess', {
+    p_session: sessionId,
+    p_token: token,
+    p_choice: choice,
+  })
+  return unwrap(data, error, TriviaSubmitSchema)
+}
+
+export async function giveUpTrivia(
+  sessionId: number,
+  token: string,
+): Promise<TriviaReveal> {
+  const { data, error } = await supabase.rpc('giveup_trivia', {
+    p_session: sessionId,
+    p_token: token,
+  })
+  return unwrap(data, error, TriviaRevealSchema)
+}
+
+export async function skipTrivia(
+  sessionId: number,
+  token: string,
+): Promise<TriviaSkip> {
+  const { data, error } = await supabase.rpc('skip_trivia', {
+    p_session: sessionId,
+    p_token: token,
+  })
+  return unwrap(data, error, TriviaSkipSchema)
+}
+
+export async function nextTrivia(
+  sessionId: number,
+  token: string,
+): Promise<TriviaNext> {
+  const { data, error } = await supabase.rpc('next_trivia', {
+    p_session: sessionId,
+    p_token: token,
+  })
+  return unwrap(data, error, TriviaNextSchema)
 }
 
 /* --------------------------- Leaderboards ----------------------------- */
