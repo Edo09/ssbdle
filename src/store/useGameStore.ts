@@ -13,10 +13,12 @@ import {
   checkGuess,
   claimArcadeRound,
   fetchCharacters,
+  fetchDailyResult,
   fetchPlayerStats,
   recordResult,
   revealAnswer,
   revealArcadeAnswer,
+  saveDailyProgress,
   startArcadeRound,
   submitArcadeRun,
 } from '@/lib/api'
@@ -218,7 +220,15 @@ export const useGameStore = create<GameState>()(
             status = 'lost'
           }
           set({ daily: { guesses, status, answer } })
-          if (status !== 'playing') await get()._finishDaily(status === 'won', guesses)
+          if (status !== 'playing') {
+            await get()._finishDaily(status === 'won', guesses)
+          } else if (useAuthStore.getState().user) {
+            // Persist in-progress guesses so an unfinished board roams devices.
+            void saveDailyProgress(
+              st.dailyDate,
+              guesses.map((g) => g.guess.id),
+            ).catch(() => {})
+          }
         } catch (e) {
           toast.error((e as Error).message)
         } finally {
@@ -494,6 +504,48 @@ export const useGameStore = create<GameState>()(
             daily.status === 'won',
             daily.guesses,
           )
+        }
+
+        // Pull a finished daily from the server (e.g. solved in another browser
+        // or device) so the account's progress follows the user everywhere.
+        if (get().daily.status === 'playing' && get().dailyDate === todayUTC()) {
+          try {
+            const date = get().dailyDate
+            const res = await fetchDailyResult(date)
+            if (res?.finished) {
+              if (!get().characters.length) await get().loadCharacters()
+              const guesses = await Promise.all(
+                res.guessed_ids.map((id) => checkGuess(id, date)),
+              )
+              const status: BoardStatus = res.solved ? 'won' : 'lost'
+              let answer: Character | null = null
+              if (res.solved) {
+                const winId = res.guessed_ids[res.guessed_ids.length - 1]
+                answer = get().characters.find((c) => c.id === winId) ?? null
+              } else {
+                answer = await revealAnswer(date)
+              }
+              // Only apply if the player hasn't started playing in the meantime.
+              if (get().dailyDate === date && get().daily.status === 'playing') {
+                set({ daily: { guesses, status, answer }, dailySynced: true })
+              }
+            } else if (res && res.guessed_ids.length > get().daily.guesses.length) {
+              // Server has an unfinished board further along — adopt its guesses.
+              if (!get().characters.length) await get().loadCharacters()
+              const guesses = await Promise.all(
+                res.guessed_ids.map((id) => checkGuess(id, date)),
+              )
+              if (
+                get().dailyDate === date &&
+                get().daily.status === 'playing' &&
+                guesses.length > get().daily.guesses.length
+              ) {
+                set({ daily: { guesses, status: 'playing', answer: null } })
+              }
+            }
+          } catch (e) {
+            console.warn('[smashdle] daily hydrate failed:', (e as Error).message)
+          }
         }
 
         const arcadeRoundId = get().arcadeRoundId

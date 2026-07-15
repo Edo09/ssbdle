@@ -98,7 +98,7 @@ const en = {
     shareFailed: 'Could not copy result',
     shareSolvedIn: 'solved in {n}',
     shareGaveUp: 'gave up',
-    shareFooter: 'play at smashdle',
+    shareFooter: 'Do you recognize the fighter? Test your knowledge on Smashdle!',
   },
   columns: {
     fighter: 'Fighter',
@@ -268,7 +268,7 @@ const es: typeof en = {
     shareFailed: 'No se pudo copiar el resultado',
     shareSolvedIn: 'resuelto en {n}',
     shareGaveUp: 'te rendiste',
-    shareFooter: 'juega en smashdle',
+    shareFooter: '¿Reconoces al personaje? ¡Pon a prueba tus conocimientos en Smashdle!',
   },
   columns: {
     fighter: 'Luchador',

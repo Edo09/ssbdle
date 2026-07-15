@@ -4,6 +4,7 @@ import {
   ArcadeLeaderRowSchema,
   CharacterSchema,
   DailyLeaderRowSchema,
+  DailyResultSchema,
   GuessResultSchema,
   PlayerStatsSchema,
   RunLeaderRowSchema,
@@ -18,6 +19,7 @@ import {
   type ArcadeLeaderRow,
   type Character,
   type DailyLeaderRow,
+  type DailyResult,
   type GuessResult,
   type PlayerStats,
   type RunLeaderRow,
@@ -79,6 +81,32 @@ export async function recordResult(input: {
 export async function revealAnswer(date: string = todayUTC()): Promise<Character> {
   const { data, error } = await supabase.rpc('reveal_answer', { p_date: date })
   return unwrap(data, error, CharacterSchema)
+}
+
+/** The signed-in player's stored result for a day (null if none). RLS-scoped. */
+export async function fetchDailyResult(
+  date: string = todayUTC(),
+): Promise<DailyResult | null> {
+  const { data, error } = await supabase
+    .from('user_daily_results')
+    .select('puzzle_date, guesses, solved, finished, guessed_ids')
+    .eq('puzzle_date', date)
+    .maybeSingle()
+  if (error) throw new Error(error.message)
+  if (!data) return null
+  return DailyResultSchema.parse(data)
+}
+
+/** Persist the signed-in player's in-progress daily guesses (best-effort). */
+export async function saveDailyProgress(
+  date: string,
+  guessedIds: number[],
+): Promise<void> {
+  const { error } = await supabase.rpc('save_daily_progress', {
+    p_date: date,
+    p_guessed_ids: guessedIds,
+  })
+  if (error) throw new Error(error.message)
 }
 
 /* ------------------------------ Arcade -------------------------------- */

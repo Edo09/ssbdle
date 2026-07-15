@@ -58,6 +58,16 @@ export const GuessResultSchema = z.object({
 })
 export type GuessResult = z.infer<typeof GuessResultSchema>
 
+/** A signed-in player's stored daily outcome (from user_daily_results). */
+export const DailyResultSchema = z.object({
+  puzzle_date: z.string(),
+  guesses: z.number(),
+  solved: z.boolean(),
+  finished: z.boolean(),
+  guessed_ids: z.array(z.number()),
+})
+export type DailyResult = z.infer<typeof DailyResultSchema>
+
 /* ------------------------------ Trivia -------------------------------- */
 
 export const TriviaQuestionSchema = z.object({

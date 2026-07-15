@@ -16,6 +16,19 @@ import {
   todayUTC,
 } from '@/lib/date'
 
+const SHARE_URL = 'https://ssbdle.vercel.app/'
+// First daily puzzle date (UTC). Only affects the "#N" shown when sharing —
+// set this to your real launch date.
+const DAILY_EPOCH = '2026-07-01'
+
+/** Human-friendly puzzle number for the daily share (days since launch). */
+function dailyPuzzleNumber(dateISO: string): number {
+  const day = 86_400_000
+  const start = Date.parse(`${DAILY_EPOCH}T00:00:00Z`)
+  const today = Date.parse(`${dateISO}T00:00:00Z`)
+  return Math.max(1, Math.floor((today - start) / day) + 1)
+}
+
 function buildShare(
   guesses: GuessResult[],
   mode: Mode,
@@ -23,7 +36,9 @@ function buildShare(
   t: TFn,
 ): string {
   const header =
-    mode === 'daily' ? `SSBUDLE ${todayUTC()}` : 'SSBUDLE • Arcade'
+    mode === 'daily'
+      ? `SSBUDLE #${dailyPuzzleNumber(todayUTC())}`
+      : 'SSBUDLE • Arcade'
   const score =
     mode === 'daily'
       ? solved
@@ -40,7 +55,7 @@ function buildShare(
         .join(''),
     )
     .join('\n')
-  return `${header} ${score}\n${grid}\n\n${t('result.shareFooter')}`
+  return `${header} ${score}\n${grid}\n\n${t('result.shareFooter')} ${SHARE_URL}`
 }
 
 function Countdown() {
@@ -173,6 +188,17 @@ export function ResultBanner({
 
   async function share() {
     const text = buildShare(guesses, mode, won, t)
+    // Prefer the native share sheet (great on mobile); fall back to clipboard.
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: 'SSBUDLE', text })
+        return
+      } catch (e) {
+        // Dismissing the sheet rejects with AbortError — treat as a no-op.
+        if ((e as Error).name === 'AbortError') return
+        // Any other failure: fall through to the clipboard path below.
+      }
+    }
     try {
       await navigator.clipboard.writeText(text)
       toast.success(t('result.shareCopied'))
