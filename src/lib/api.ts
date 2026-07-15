@@ -6,6 +6,7 @@ import {
   DailyLeaderRowSchema,
   GuessResultSchema,
   PlayerStatsSchema,
+  RunLeaderRowSchema,
   TriviaLeaderRowSchema,
   TriviaQuestionSchema,
   TriviaResultSchema,
@@ -14,6 +15,8 @@ import {
   type DailyLeaderRow,
   type GuessResult,
   type PlayerStats,
+  type RunLeaderRow,
+  type RunVariantValue,
   type TriviaLeaderRow,
   type TriviaQuestion,
   type TriviaResult,
@@ -91,6 +94,44 @@ export async function revealArcadeAnswer(roundId: string): Promise<Character> {
     p_round_id: roundId,
   })
   return unwrap(data, error, CharacterSchema)
+}
+
+/** Retroactively attributes an already-finished anonymous round on sign-in. */
+export async function claimArcadeRound(roundId: string): Promise<void> {
+  const { error } = await supabase.rpc('claim_arcade_round', {
+    p_round_id: roundId,
+  })
+  if (error) throw new Error(error.message)
+}
+
+/* --------------------------- Arcade Run mode --------------------------- */
+
+export async function submitArcadeRun(input: {
+  variant: RunVariantValue
+  fighters: number
+  points: number
+  endedReason: 'dead' | 'time' | 'quit'
+}): Promise<void> {
+  const { error } = await supabase.rpc('submit_arcade_run', {
+    p_variant: input.variant,
+    p_fighters: input.fighters,
+    p_points: input.points,
+    p_ended_reason: input.endedReason,
+  })
+  if (error) throw new Error(error.message)
+}
+
+export async function fetchArcadeRunLeaderboard(
+  variant: RunVariantValue,
+  limit = 50,
+): Promise<RunLeaderRow[]> {
+  const { data, error } = await supabase
+    .from('leaderboard_arcade_runs')
+    .select('*')
+    .eq('variant', variant)
+    .order('rank', { ascending: true })
+    .limit(limit)
+  return unwrap(data, error, z.array(RunLeaderRowSchema))
 }
 
 /* ------------------------------ Trivia -------------------------------- */

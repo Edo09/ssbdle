@@ -57,6 +57,7 @@ export function DailyMode() {
           mode="daily"
           onGuess={submitGuess}
           onGiveUp={giveUp}
+          giveUpAnytime
         />
       )}
     </section>

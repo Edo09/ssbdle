@@ -23,6 +23,8 @@ interface Props {
   onGuess: (c: Character) => void
   onGiveUp?: () => void
   onPlayAgain?: () => void
+  /** Allow giving up before the first guess (Daily only — Endless still requires one). */
+  giveUpAnytime?: boolean
 }
 
 export function GuessBoard({
@@ -37,6 +39,7 @@ export function GuessBoard({
   onGuess,
   onGiveUp,
   onPlayAgain,
+  giveUpAnytime,
 }: Props) {
   const { t } = useI18n()
   const excludeIds = useMemo(
@@ -83,7 +86,7 @@ export function GuessBoard({
                 </>
               )}
             </span>
-            {onGiveUp && guesses.length > 0 && (
+            {onGiveUp && (giveUpAnytime || guesses.length > 0) && (
               <Button
                 onClick={onGiveUp}
                 variant="ghost"

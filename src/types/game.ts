@@ -110,6 +110,17 @@ export const TriviaLeaderRowSchema = z.object({
 })
 export type TriviaLeaderRow = z.infer<typeof TriviaLeaderRowSchema>
 
+export const RunVariantSchema = z.enum(['sudden_death', 'lives', 'time_attack'])
+export type RunVariantValue = z.infer<typeof RunVariantSchema>
+
+export const RunLeaderRowSchema = z.object({
+  rank: z.number(),
+  username: z.string(),
+  fighters: z.number(),
+  points: z.number(),
+})
+export type RunLeaderRow = z.infer<typeof RunLeaderRowSchema>
+
 /* --------------------------- Player stats ----------------------------- */
 
 export const PlayerStatsSchema = z.object({

@@ -23,6 +23,7 @@ function App() {
   const user = useAuthStore((s) => s.user)
   const loadCharacters = useGameStore((s) => s.loadCharacters)
   const refreshServerStats = useGameStore((s) => s.refreshServerStats)
+  const syncPendingResults = useGameStore((s) => s.syncPendingResults)
 
   useEffect(() => {
     initAuth()
@@ -34,7 +35,10 @@ function App() {
 
   useEffect(() => {
     refreshServerStats()
-  }, [user, refreshServerStats])
+    // Push any Daily/Run result that finished while signed out — covers
+    // both "sign in mid-session" and "already signed in" on page load.
+    if (user) syncPendingResults()
+  }, [user, refreshServerStats, syncPendingResults])
 
   useEffect(() => {
     document.documentElement.lang = lang

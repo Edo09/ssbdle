@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { BrainCircuit, Crosshair, Flame, Medal, Target, Trophy } from 'lucide-react'
+import {
+  BrainCircuit,
+  Crosshair,
+  Flame,
+  Heart,
+  Medal,
+  Skull,
+  Swords,
+  Target,
+  Timer,
+  Trophy,
+} from 'lucide-react'
 import {
   fetchArcadeLeaderboard,
+  fetchArcadeRunLeaderboard,
   fetchDailyLeaderboard,
   fetchTriviaLeaderboard,
 } from '@/lib/api'
+import {
+  RUN_ACCENT,
+  RUN_VARIANTS,
+  RUN_VARIANT_NAME_KEY,
+  type RunVariant,
+} from '@/lib/arcadeRun'
 import type {
   ArcadeLeaderRow,
   DailyLeaderRow,
+  RunLeaderRow,
   TriviaLeaderRow,
 } from '@/types/game'
 import { displayName, useAuthStore } from '@/store/useAuthStore'
@@ -29,7 +48,13 @@ interface Props {
   onOpenChange: (open: boolean) => void
 }
 
-type LeaderboardMode = 'daily' | 'arcade' | 'trivia'
+type LeaderboardMode = 'daily' | 'arcade' | 'trivia' | 'run'
+
+const RUN_VARIANT_ICON: Record<RunVariant, LucideIcon> = {
+  sudden_death: Skull,
+  lives: Heart,
+  time_attack: Timer,
+}
 
 function RankBadge({ rank }: { rank: number }) {
   const medal =
@@ -152,10 +177,16 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
   const me = displayName(user)
 
   const [mode, setMode] = useState<LeaderboardMode>('daily')
+  const [runVariant, setRunVariant] = useState<RunVariant>('sudden_death')
   const [loading, setLoading] = useState(true)
   const [daily, setDaily] = useState<DailyLeaderRow[]>([])
   const [arcade, setArcade] = useState<ArcadeLeaderRow[]>([])
   const [trivia, setTrivia] = useState<TriviaLeaderRow[]>([])
+  const [runRows, setRunRows] = useState<Record<RunVariant, RunLeaderRow[]>>({
+    sudden_death: [],
+    lives: [],
+    time_attack: [],
+  })
 
   useEffect(() => {
     if (!open) return
@@ -163,15 +194,28 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
 
     async function loadLeaderboards() {
       setLoading(true)
-      const res = await Promise.allSettled([
-        fetchDailyLeaderboard(),
-        fetchArcadeLeaderboard(),
-        fetchTriviaLeaderboard(),
+      const [res, runRes] = await Promise.all([
+        Promise.allSettled([
+          fetchDailyLeaderboard(),
+          fetchArcadeLeaderboard(),
+          fetchTriviaLeaderboard(),
+        ]),
+        Promise.allSettled(RUN_VARIANTS.map((v) => fetchArcadeRunLeaderboard(v))),
       ])
       if (cancelled) return
       if (res[0].status === 'fulfilled') setDaily(res[0].value)
       if (res[1].status === 'fulfilled') setArcade(res[1].value)
       if (res[2].status === 'fulfilled') setTrivia(res[2].value)
+      const next: Record<RunVariant, RunLeaderRow[]> = {
+        sudden_death: [],
+        lives: [],
+        time_attack: [],
+      }
+      RUN_VARIANTS.forEach((v, i) => {
+        const r = runRes[i]
+        if (r.status === 'fulfilled') next[v] = r.value
+      })
+      setRunRows(next)
       setLoading(false)
     }
 
@@ -192,6 +236,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
     daily: t('leaderboard.dailyGuide'),
     arcade: t('leaderboard.arcadeGuide'),
     trivia: t('leaderboard.triviaGuide'),
+    run: t('leaderboard.runGuide'),
   }
 
   return (
@@ -207,12 +252,15 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
 
         <Tabs value={mode} onValueChange={(value) => setMode(value as LeaderboardMode)}>
           <div className="space-y-3 px-5 pt-4 sm:px-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="daily">
               <Flame className="size-4" /> {t('header.daily')}
             </TabsTrigger>
             <TabsTrigger value="arcade">
               <Crosshair className="size-4" /> {t('header.arcade')}
+            </TabsTrigger>
+            <TabsTrigger value="run">
+              <Swords className="size-4" /> {t('run.run')}
             </TabsTrigger>
             <TabsTrigger value="trivia">
               <BrainCircuit className="size-4" /> {t('header.trivia')}
@@ -294,6 +342,75 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     ]}
                   />
                 ))
+              )}
+            </TabsContent>
+
+            <TabsContent value="run" className="space-y-3">
+              <div className="grid grid-cols-3 gap-1.5">
+                {RUN_VARIANTS.map((v) => {
+                  const Icon = RUN_VARIANT_ICON[v]
+                  const active = runVariant === v
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setRunVariant(v)}
+                      aria-pressed={active}
+                      style={
+                        active
+                          ? {
+                              background: `color-mix(in srgb, ${RUN_ACCENT[v]} 18%, transparent)`,
+                              color: RUN_ACCENT[v],
+                              borderColor: `color-mix(in srgb, ${RUN_ACCENT[v]} 40%, transparent)`,
+                            }
+                          : undefined
+                      }
+                      className={cn(
+                        'flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-xs font-semibold transition-colors',
+                        active
+                          ? ''
+                          : 'border-border/50 text-muted-foreground hover:bg-secondary/40',
+                      )}
+                    >
+                      <Icon className="size-3.5" />
+                      <span className="hidden sm:inline">
+                        {t(RUN_VARIANT_NAME_KEY[v])}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {loading ? (
+                <LoadingRows />
+              ) : runRows[runVariant].length === 0 ? (
+                empty
+              ) : (
+                <div className="space-y-2">
+                  {runRows[runVariant].map((r) => (
+                    <Row
+                      key={r.rank}
+                      rank={r.rank}
+                      name={r.username}
+                      me={r.username === me}
+                      meLabel={meLabel}
+                      metrics={[
+                        {
+                          icon: Swords,
+                          label: t('run.fighters'),
+                          value: r.fighters,
+                          tone: 'text-primary',
+                        },
+                        {
+                          icon: Target,
+                          label: t('run.points'),
+                          value: r.points,
+                          tone: 'text-accent',
+                        },
+                      ]}
+                    />
+                  ))}
+                </div>
               )}
             </TabsContent>
 
