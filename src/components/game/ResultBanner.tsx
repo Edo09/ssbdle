@@ -188,8 +188,14 @@ export function ResultBanner({
 
   async function share() {
     const text = buildShare(guesses, mode, won, t)
-    // Prefer the native share sheet (great on mobile); fall back to clipboard.
-    if (typeof navigator.share === 'function') {
+    // The native share sheet is ideal on phones, but on desktop (e.g. the
+    // Windows share dialog) it has no "copy" option — so only use it on
+    // touch-primary devices and copy to the clipboard everywhere else.
+    const useShareSheet =
+      typeof navigator.share === 'function' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(pointer: coarse)').matches
+    if (useShareSheet) {
       try {
         await navigator.share({ title: 'SSBUDLE', text })
         return
@@ -256,6 +262,12 @@ export function ResultBanner({
       ) : (
         <p className="relative mt-3 text-sm text-muted-foreground">
           {t('result.signInReveal')}
+        </p>
+      )}
+
+      {mode === 'daily' && !won && (
+        <p className="relative mt-3 text-sm font-medium text-muted-foreground">
+          {t('result.tryTomorrow')}
         </p>
       )}
 
