@@ -225,15 +225,11 @@ export function ResultBanner({
         </h3>
       </div>
 
-      {mode === 'daily' && !won ? (
-        <p className="relative mt-3 text-sm text-muted-foreground">
-          {t('result.tryTomorrow')}
-        </p>
-      ) : answer ? (
+      {answer ? (
         <AnswerReveal answer={answer} won={won} />
       ) : (
         <p className="relative mt-3 text-sm text-muted-foreground">
-          {t('result.revealUnavailable')}
+          {t('result.signInReveal')}
         </p>
       )}
 

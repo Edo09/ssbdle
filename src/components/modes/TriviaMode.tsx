@@ -54,6 +54,7 @@ export function TriviaMode() {
   const [eliminated, setEliminated] = useState<string[]>([])
   const [reveal, setReveal] = useState<Reveal | null>(null)
   const [summary, setSummary] = useState<Summary | null>(null)
+  const [skipsLeft, setSkipsLeft] = useState(0)
 
   const terminal =
     qStatus === 'correct' || qStatus === 'revealed' || qStatus === 'skipped'
@@ -71,6 +72,7 @@ export function TriviaMode() {
       setQStatus('unanswered')
       setEliminated([])
       setReveal(null)
+      setSkipsLeft(run.skips_left ?? 4)
       setPhase('playing')
     } catch (e) {
       setError((e as Error).message)
@@ -121,10 +123,11 @@ export function TriviaMode() {
   }
 
   async function skip() {
-    if (!session || busy || terminal) return
+    if (!session || busy || terminal || skipsLeft <= 0) return
     setBusy(true)
     try {
-      await skipTrivia(session.id, session.token)
+      const r = await skipTrivia(session.id, session.token)
+      setSkipsLeft(r.skips_left ?? Math.max(0, skipsLeft - 1))
       setQStatus('skipped')
       setReveal(null)
     } catch (e) {
@@ -150,6 +153,7 @@ export function TriviaMode() {
         setQStatus('unanswered')
         setEliminated([])
         setReveal(null)
+        setSkipsLeft(r.skips_left ?? skipsLeft)
       }
     } catch (e) {
       toast.error((e as Error).message)
@@ -320,10 +324,10 @@ export function TriviaMode() {
                   onClick={skip}
                   variant="ghost"
                   size="sm"
-                  disabled={busy}
+                  disabled={busy || skipsLeft <= 0}
                   className="border border-border"
                 >
-                  <SkipForward /> {t('trivia.skip')}
+                  <SkipForward /> {t('trivia.skip')} ({skipsLeft})
                 </Button>
               </>
             ) : (

@@ -88,6 +88,7 @@ export const TriviaStartSchema = z.object({
   length: z.coerce.number(),
   index: z.coerce.number(),
   score: z.coerce.number(),
+  skips_left: z.coerce.number().optional(),
   question: TriviaQuestionSchema,
 })
 export type TriviaStart = z.infer<typeof TriviaStartSchema>
@@ -120,12 +121,14 @@ export type TriviaReveal = z.infer<typeof TriviaRevealSchema>
 export const TriviaSkipSchema = z.object({
   status: z.string(),
   can_next: z.boolean(),
+  skips_left: z.coerce.number().optional(),
 })
 export type TriviaSkip = z.infer<typeof TriviaSkipSchema>
 
 /** Response of next_trivia — either the next question or the run summary. */
 export const TriviaNextSchema = z.object({
   finished: z.boolean(),
+  skips_left: z.coerce.number().optional(),
   index: z.coerce.number().optional(),
   score: z.coerce.number().optional(),
   question: TriviaQuestionSchema.optional(),

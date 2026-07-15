@@ -15,6 +15,7 @@ import {
   fetchCharacters,
   fetchPlayerStats,
   recordResult,
+  revealAnswer,
   revealArcadeAnswer,
   startArcadeRound,
   submitArcadeRun,
@@ -249,8 +250,11 @@ export const useGameStore = create<GameState>()(
             guessedIds: guesses.map((g) => g.guess.id),
           })
           set({ dailySynced: true })
-          // Daily never reveals the answer on a loss — keep today's fighter
-          // a surprise so there's a reason to come back tomorrow.
+          // On a loss, reveal the fighter (unlocked once the result is recorded).
+          if (!solved) {
+            const ans = await revealAnswer(date)
+            set((s) => ({ daily: { ...s.daily, answer: ans } }))
+          }
           await get().refreshServerStats()
         } catch (e) {
           console.warn('[smashdle] daily sync failed:', (e as Error).message)
