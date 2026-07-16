@@ -169,7 +169,7 @@ const en = {
     lower: 'answer is lower',
   },
   values: {
-    gender: { Male: 'Male', Female: 'Female', Selectable: 'Selectable', Genderless: 'Genderless', Other: 'Other' },
+    gender: { Male: 'Male', Female: 'Female', Selectable: 'Selectable', Genderless: 'Genderless', Other: 'Other', Unknown: 'Unknown' },
     fighterType: { Starter: 'Starter', Unlockable: 'Unlockable', DLC: 'DLC' },
   },
   help: {
@@ -377,7 +377,7 @@ const es: typeof en = {
     lower: 'la respuesta es menor',
   },
   values: {
-    gender: { Male: 'Masculino', Female: 'Femenino', Selectable: 'Seleccionable', Genderless: 'Sin género', Other: 'Otro' },
+    gender: { Male: 'Masculino', Female: 'Femenino', Selectable: 'Seleccionable', Genderless: 'Sin género', Other: 'Otro', Unknown: 'Desconocido' },
     fighterType: { Starter: 'Inicial', Unlockable: 'Desbloqueable', DLC: 'DLC' },
   },
   help: {
