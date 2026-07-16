@@ -65,6 +65,8 @@ export const DailyResultSchema = z.object({
   solved: z.boolean(),
   finished: z.boolean(),
   guessed_ids: z.array(z.number()),
+  started_at: z.string().nullable().optional(),
+  solve_ms: z.coerce.number().nullable().optional(),
 })
 export type DailyResult = z.infer<typeof DailyResultSchema>
 
@@ -172,6 +174,14 @@ export const DailyLeaderRowSchema = z.object({
   win_pct: z.coerce.number().nullable(),
 })
 export type DailyLeaderRow = z.infer<typeof DailyLeaderRowSchema>
+
+export const DailyTimeLeaderRowSchema = z.object({
+  rank: z.number(),
+  username: z.string(),
+  best_ms: z.coerce.number(),
+  wins: z.number(),
+})
+export type DailyTimeLeaderRow = z.infer<typeof DailyTimeLeaderRowSchema>
 
 export const ArcadeLeaderRowSchema = z.object({
   rank: z.number(),

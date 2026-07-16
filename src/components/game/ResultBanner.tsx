@@ -13,6 +13,7 @@ import { fighterRender, fullPortrait } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 import {
   formatCountdown,
+  formatSolveTime,
   msUntilNextUTCMidnight,
   todayUTC,
 } from '@/lib/date'
@@ -35,12 +36,13 @@ function buildShare(
   mode: Mode,
   solved: boolean,
   t: TFn,
+  solveMs?: number | null,
 ): string {
   const header =
     mode === 'daily'
       ? `SSBUDLE #${dailyPuzzleNumber(todayUTC())}`
       : 'SSBUDLE • Arcade'
-  const score =
+  const base =
     mode === 'daily'
       ? solved
         ? `${guesses.length}/${MAX_GUESSES}`
@@ -48,6 +50,10 @@ function buildShare(
       : solved
         ? t('result.shareSolvedIn', { n: guesses.length })
         : t('result.shareGaveUp')
+  const score =
+    mode === 'daily' && solved && solveMs != null
+      ? `${base} · ${formatSolveTime(solveMs)}`
+      : base
   const grid = guesses
     .map((g) =>
       g.attributes
@@ -174,6 +180,7 @@ interface Props {
   answer: Character | null
   guesses: GuessResult[]
   mode: Mode
+  solveMs?: number | null
   onPlayAgain?: () => void
 }
 
@@ -182,6 +189,7 @@ export function ResultBanner({
   answer,
   guesses,
   mode,
+  solveMs,
   onPlayAgain,
 }: Props) {
   const { t } = useI18n()
@@ -189,7 +197,7 @@ export function ResultBanner({
   const [authOpen, setAuthOpen] = useState(false)
 
   async function share() {
-    const text = buildShare(guesses, mode, won, t)
+    const text = buildShare(guesses, mode, won, t, solveMs)
     // The native share sheet is ideal on phones, but on desktop (e.g. the
     // Windows share dialog) it has no "copy" option — so only use it on
     // touch-primary devices and copy to the clipboard everywhere else.
@@ -258,6 +266,15 @@ export function ResultBanner({
           {won ? t('result.won') : t('result.lost')}
         </h3>
       </div>
+
+      {won && mode === 'daily' && solveMs != null && (
+        <p className="relative mt-2 text-center text-sm text-muted-foreground">
+          {t('result.solvedIn')}{' '}
+          <span className="font-display font-semibold text-foreground">
+            {formatSolveTime(solveMs)}
+          </span>
+        </p>
+      )}
 
       {answer ? (
         <AnswerReveal answer={answer} won={won} />

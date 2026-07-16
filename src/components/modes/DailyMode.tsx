@@ -53,6 +53,8 @@ export function DailyMode() {
           answer={daily.answer}
           submitting={submitting}
           maxGuesses={MAX_GUESSES}
+          startedAt={daily.startedAt}
+          solveMs={daily.solveMs}
           mode="daily"
           onGuess={submitGuess}
         />

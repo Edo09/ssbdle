@@ -9,6 +9,7 @@ import { GuessInput } from '@/components/game/GuessInput'
 import { GuessGrid } from '@/components/game/GuessGrid'
 import { Legend } from '@/components/game/Legend'
 import { MaskIcon } from '@/components/game/SeriesIcon'
+import { LiveTimer } from '@/components/game/LiveTimer'
 import { ResultBanner } from '@/components/game/ResultBanner'
 
 interface Props {
@@ -19,6 +20,8 @@ interface Props {
   submitting?: boolean
   starting?: boolean
   maxGuesses?: number
+  startedAt?: number | null
+  solveMs?: number | null
   mode: Mode
   onGuess: (c: Character) => void
   onGiveUp?: () => void
@@ -33,6 +36,8 @@ export function GuessBoard({
   submitting,
   starting,
   maxGuesses,
+  startedAt,
+  solveMs,
   mode,
   onGuess,
   onGiveUp,
@@ -87,6 +92,9 @@ export function GuessBoard({
                 </>
               )}
             </span>
+            {mode === 'daily' && (
+              <LiveTimer startedAt={startedAt} running={playing} />
+            )}
             {onGiveUp && guesses.length > 0 && (
               <Button
                 onClick={onGiveUp}
@@ -127,6 +135,7 @@ export function GuessBoard({
           answer={answer}
           guesses={guesses}
           mode={mode}
+          solveMs={solveMs}
           onPlayAgain={onPlayAgain}
         />
       )}

@@ -82,9 +82,17 @@ interface Board {
   guesses: GuessResult[]
   status: BoardStatus
   answer: Character | null
+  startedAt?: number | null // ms epoch of the first guess (daily timer)
+  solveMs?: number | null // final solve time in ms (daily, on win)
 }
 
-const emptyBoard = (): Board => ({ guesses: [], status: 'playing', answer: null })
+const emptyBoard = (): Board => ({
+  guesses: [],
+  status: 'playing',
+  answer: null,
+  startedAt: null,
+  solveMs: null,
+})
 
 const emptyStats = (): LocalStats => ({
   played: 0,
@@ -161,11 +169,16 @@ interface GameState {
   syncPendingResults: () => Promise<void>
 
   // internal
-  _finishDaily: (solved: boolean, guesses: GuessResult[]) => Promise<void>
+  _finishDaily: (
+    solved: boolean,
+    guesses: GuessResult[],
+    solveMs: number | null,
+  ) => Promise<void>
   _syncDailyToServer: (
     date: string,
     solved: boolean,
     guesses: GuessResult[],
+    solveMs: number | null,
   ) => Promise<void>
   _nextRunFighter: () => Promise<void>
 }
@@ -211,6 +224,7 @@ export const useGameStore = create<GameState>()(
         try {
           const result = await checkGuess(c.id, st.dailyDate)
           const guesses = [...get().daily.guesses, result]
+          const startedAt = get().daily.startedAt ?? Date.now() // first guess starts the clock
           let status: BoardStatus = 'playing'
           let answer: Character | null = null
           if (result.correct) {
@@ -219,9 +233,10 @@ export const useGameStore = create<GameState>()(
           } else if (guesses.length >= MAX_GUESSES) {
             status = 'lost'
           }
-          set({ daily: { guesses, status, answer } })
+          const solveMs = status === 'won' ? Date.now() - startedAt : null
+          set({ daily: { guesses, status, answer, startedAt, solveMs } })
           if (status !== 'playing') {
-            await get()._finishDaily(status === 'won', guesses)
+            await get()._finishDaily(status === 'won', guesses, solveMs)
           } else if (useAuthStore.getState().user) {
             // Persist in-progress guesses so an unfinished board roams devices.
             void saveDailyProgress(
@@ -239,17 +254,17 @@ export const useGameStore = create<GameState>()(
       giveUpDaily: async () => {
         const st = get()
         if (st.daily.status !== 'playing') return
-        set({ daily: { ...st.daily, status: 'lost' } })
-        await get()._finishDaily(false, st.daily.guesses)
+        set({ daily: { ...st.daily, status: 'lost', solveMs: null } })
+        await get()._finishDaily(false, st.daily.guesses, null)
       },
 
-      _finishDaily: async (solved, guesses) => {
+      _finishDaily: async (solved, guesses, solveMs) => {
         const date = get().dailyDate
         set((s) => ({ localStats: applyResult(s.localStats, solved, date) }))
-        await get()._syncDailyToServer(date, solved, guesses)
+        await get()._syncDailyToServer(date, solved, guesses, solveMs)
       },
 
-      _syncDailyToServer: async (date, solved, guesses) => {
+      _syncDailyToServer: async (date, solved, guesses, solveMs) => {
         const user = useAuthStore.getState().user
         if (!user || get().dailySynced) return
         try {
@@ -258,6 +273,7 @@ export const useGameStore = create<GameState>()(
             solved,
             guesses: guesses.length,
             guessedIds: guesses.map((g) => g.guess.id),
+            solveMs,
           })
           set({ dailySynced: true })
           // On a loss, reveal the fighter (unlocked once the result is recorded).
@@ -503,6 +519,7 @@ export const useGameStore = create<GameState>()(
             get().dailyDate,
             daily.status === 'won',
             daily.guesses,
+            daily.solveMs ?? null,
           )
         }
 
@@ -526,8 +543,18 @@ export const useGameStore = create<GameState>()(
                 answer = await revealAnswer(date)
               }
               // Only apply if the player hasn't started playing in the meantime.
+              const startedAt = res.started_at ? Date.parse(res.started_at) : null
               if (get().dailyDate === date && get().daily.status === 'playing') {
-                set({ daily: { guesses, status, answer }, dailySynced: true })
+                set({
+                  daily: {
+                    guesses,
+                    status,
+                    answer,
+                    startedAt,
+                    solveMs: res.solve_ms ?? null,
+                  },
+                  dailySynced: true,
+                })
               }
             } else if (res && res.guessed_ids.length > get().daily.guesses.length) {
               // Server has an unfinished board further along — adopt its guesses.
@@ -535,12 +562,15 @@ export const useGameStore = create<GameState>()(
               const guesses = await Promise.all(
                 res.guessed_ids.map((id) => checkGuess(id, date)),
               )
+              const startedAt = res.started_at ? Date.parse(res.started_at) : Date.now()
               if (
                 get().dailyDate === date &&
                 get().daily.status === 'playing' &&
                 guesses.length > get().daily.guesses.length
               ) {
-                set({ daily: { guesses, status: 'playing', answer: null } })
+                set({
+                  daily: { guesses, status: 'playing', answer: null, startedAt, solveMs: null },
+                })
               }
             }
           } catch (e) {

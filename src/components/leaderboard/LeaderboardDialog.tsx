@@ -16,6 +16,7 @@ import {
   fetchArcadeLeaderboard,
   fetchArcadeRunLeaderboard,
   fetchDailyLeaderboard,
+  fetchDailyTimeLeaderboard,
   fetchTriviaLeaderboard,
 } from '@/lib/api'
 import {
@@ -27,6 +28,7 @@ import {
 import type {
   ArcadeLeaderRow,
   DailyLeaderRow,
+  DailyTimeLeaderRow,
   RunLeaderRow,
   TriviaLeaderRow,
 } from '@/types/game'
@@ -42,13 +44,14 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
+import { formatSolveTime } from '@/lib/date'
 
 interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
-type LeaderboardMode = 'daily' | 'arcade' | 'trivia' | 'run'
+type LeaderboardMode = 'daily' | 'arcade' | 'trivia' | 'run' | 'fastest'
 
 const RUN_VARIANT_ICON: Record<RunVariant, LucideIcon> = {
   sudden_death: Skull,
@@ -182,6 +185,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
   const [daily, setDaily] = useState<DailyLeaderRow[]>([])
   const [arcade, setArcade] = useState<ArcadeLeaderRow[]>([])
   const [trivia, setTrivia] = useState<TriviaLeaderRow[]>([])
+  const [fastest, setFastest] = useState<DailyTimeLeaderRow[]>([])
   const [runRows, setRunRows] = useState<Record<RunVariant, RunLeaderRow[]>>({
     sudden_death: [],
     lives: [],
@@ -199,6 +203,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
           fetchDailyLeaderboard(),
           fetchArcadeLeaderboard(),
           fetchTriviaLeaderboard(),
+          fetchDailyTimeLeaderboard(),
         ]),
         Promise.allSettled(RUN_VARIANTS.map((v) => fetchArcadeRunLeaderboard(v))),
       ])
@@ -206,6 +211,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
       if (res[0].status === 'fulfilled') setDaily(res[0].value)
       if (res[1].status === 'fulfilled') setArcade(res[1].value)
       if (res[2].status === 'fulfilled') setTrivia(res[2].value)
+      if (res[3].status === 'fulfilled') setFastest(res[3].value)
       const next: Record<RunVariant, RunLeaderRow[]> = {
         sudden_death: [],
         lives: [],
@@ -237,6 +243,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
     arcade: t('leaderboard.arcadeGuide'),
     trivia: t('leaderboard.triviaGuide'),
     run: t('leaderboard.runGuide'),
+    fastest: t('leaderboard.fastestGuide'),
   }
 
   return (
@@ -252,7 +259,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
 
         <Tabs value={mode} onValueChange={(value) => setMode(value as LeaderboardMode)}>
           <div className="space-y-3 px-5 pt-4 sm:px-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="daily">
               <Flame className="size-4" /> {t('header.daily')}
             </TabsTrigger>
@@ -264,6 +271,9 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
             </TabsTrigger>
             <TabsTrigger value="trivia">
               <BrainCircuit className="size-4" /> {t('header.trivia')}
+            </TabsTrigger>
+            <TabsTrigger value="fastest">
+              <Timer className="size-4" /> {t('leaderboard.fastest')}
             </TabsTrigger>
             </TabsList>
 
@@ -446,6 +456,38 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                         label: t('leaderboard.accuracy'),
                         value: r.accuracy_pct != null ? `${r.accuracy_pct}%` : '—',
                         tone: 'text-purple',
+                      },
+                    ]}
+                  />
+                ))
+              )}
+            </TabsContent>
+
+            <TabsContent value="fastest" className="space-y-2">
+              {loading ? (
+                <LoadingRows />
+              ) : fastest.length === 0 ? (
+                empty
+              ) : (
+                fastest.map((r) => (
+                  <Row
+                    key={r.rank}
+                    rank={r.rank}
+                    name={r.username}
+                    me={r.username === me}
+                    meLabel={meLabel}
+                    metrics={[
+                      {
+                        icon: Timer,
+                        label: t('leaderboard.bestTime'),
+                        value: formatSolveTime(r.best_ms),
+                        tone: 'text-accent',
+                      },
+                      {
+                        icon: Trophy,
+                        label: t('leaderboard.wins'),
+                        value: r.wins,
+                        tone: 'text-yellow',
                       },
                     ]}
                   />

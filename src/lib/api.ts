@@ -5,6 +5,7 @@ import {
   CharacterSchema,
   DailyLeaderRowSchema,
   DailyResultSchema,
+  DailyTimeLeaderRowSchema,
   GuessResultSchema,
   PlayerStatsSchema,
   RunLeaderRowSchema,
@@ -20,6 +21,7 @@ import {
   type Character,
   type DailyLeaderRow,
   type DailyResult,
+  type DailyTimeLeaderRow,
   type GuessResult,
   type PlayerStats,
   type RunLeaderRow,
@@ -68,12 +70,14 @@ export async function recordResult(input: {
   solved: boolean
   guesses: number
   guessedIds: number[]
+  solveMs?: number | null
 }): Promise<void> {
   const { error } = await supabase.rpc('record_result', {
     p_date: input.date ?? todayUTC(),
     p_solved: input.solved,
     p_guesses: input.guesses,
     p_guessed_ids: input.guessedIds,
+    p_solve_ms: input.solveMs ?? null,
   })
   if (error) throw new Error(error.message)
 }
@@ -89,7 +93,7 @@ export async function fetchDailyResult(
 ): Promise<DailyResult | null> {
   const { data, error } = await supabase
     .from('user_daily_results')
-    .select('puzzle_date, guesses, solved, finished, guessed_ids')
+    .select('puzzle_date, guesses, solved, finished, guessed_ids, started_at, solve_ms')
     .eq('puzzle_date', date)
     .maybeSingle()
   if (error) throw new Error(error.message)
@@ -270,6 +274,17 @@ export async function fetchDailyLeaderboard(limit = 50): Promise<DailyLeaderRow[
     .order('rank', { ascending: true })
     .limit(limit)
   return unwrap(data, error, z.array(DailyLeaderRowSchema))
+}
+
+export async function fetchDailyTimeLeaderboard(
+  limit = 50,
+): Promise<DailyTimeLeaderRow[]> {
+  const { data, error } = await supabase
+    .from('leaderboard_daily_time')
+    .select('*')
+    .order('rank', { ascending: true })
+    .limit(limit)
+  return unwrap(data, error, z.array(DailyTimeLeaderRowSchema))
 }
 
 export async function fetchArcadeLeaderboard(limit = 50): Promise<ArcadeLeaderRow[]> {
