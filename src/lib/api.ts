@@ -287,6 +287,23 @@ export async function fetchDailyTimeLeaderboard(
   return unwrap(data, error, z.array(DailyTimeLeaderRowSchema))
 }
 
+/** Yesterday's snapshot ranks per board, for the rank-change arrows. */
+export async function fetchPreviousRanks(): Promise<
+  { board: string; username: string; rank: number }[]
+> {
+  const { data, error } = await supabase.rpc('previous_leaderboard_ranks')
+  if (error) throw new Error(error.message)
+  return z
+    .array(
+      z.object({
+        board: z.string(),
+        username: z.string(),
+        rank: z.coerce.number(),
+      }),
+    )
+    .parse(data ?? [])
+}
+
 export async function fetchArcadeLeaderboard(limit = 50): Promise<ArcadeLeaderRow[]> {
   const { data, error } = await supabase
     .from('leaderboard_arcade')

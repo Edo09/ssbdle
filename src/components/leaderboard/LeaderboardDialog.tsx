@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
   BrainCircuit,
+  ChevronDown,
+  ChevronUp,
   Crosshair,
   Flame,
   Heart,
@@ -17,6 +19,7 @@ import {
   fetchArcadeRunLeaderboard,
   fetchDailyLeaderboard,
   fetchDailyTimeLeaderboard,
+  fetchPreviousRanks,
   fetchTriviaLeaderboard,
 } from '@/lib/api'
 import {
@@ -58,6 +61,10 @@ const RUN_VARIANT_ICON: Record<RunVariant, LucideIcon> = {
   lives: Heart,
   time_attack: Timer,
 }
+
+// Rank movement "since yesterday" — from the server's daily snapshot.
+// board ('daily' | 'arcade' | 'trivia' | 'fastest' | 'run:<variant>') -> username -> rank
+type RankSnapshot = Record<string, Record<string, number>>
 
 function RankBadge({ rank }: { rank: number }) {
   const medal =
@@ -134,12 +141,14 @@ function Row({
   name,
   me,
   meLabel,
+  delta,
   metrics,
 }: {
   rank: number
   name: string
   me: boolean
   meLabel: string
+  delta?: number
   metrics: Metric[]
 }) {
   return (
@@ -161,8 +170,24 @@ function Row({
             </span>
           )}
         </div>
-        <span className="mt-0.5 block text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+        <span className="mt-0.5 flex items-center gap-1 text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
           #{rank}
+          {delta != null && delta !== 0 && (
+            <span
+              className={cn(
+                'inline-flex items-center gap-0.5 font-bold tabular-nums',
+                delta > 0 ? 'text-green' : 'text-destructive',
+              )}
+              title={delta > 0 ? `Up ${delta}` : `Down ${-delta}`}
+            >
+              {delta > 0 ? (
+                <ChevronUp className="size-3" />
+              ) : (
+                <ChevronDown className="size-3" />
+              )}
+              {Math.abs(delta)}
+            </span>
+          )}
         </span>
       </div>
       <div className="flex shrink-0 gap-1.5 sm:gap-2">
@@ -191,6 +216,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
     lives: [],
     time_attack: [],
   })
+  const [prevSnap, setPrevSnap] = useState<RankSnapshot>({})
 
   useEffect(() => {
     if (!open) return
@@ -204,6 +230,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
           fetchArcadeLeaderboard(),
           fetchTriviaLeaderboard(),
           fetchDailyTimeLeaderboard(),
+          fetchPreviousRanks(),
         ]),
         Promise.allSettled(RUN_VARIANTS.map((v) => fetchArcadeRunLeaderboard(v))),
       ])
@@ -212,6 +239,14 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
       if (res[1].status === 'fulfilled') setArcade(res[1].value)
       if (res[2].status === 'fulfilled') setTrivia(res[2].value)
       if (res[3].status === 'fulfilled') setFastest(res[3].value)
+      if (res[4].status === 'fulfilled') {
+        const snap: RankSnapshot = {}
+        for (const row of res[4].value) {
+          const board = (snap[row.board] ??= {})
+          board[row.username] = row.rank
+        }
+        setPrevSnap(snap)
+      }
       const next: Record<RunVariant, RunLeaderRow[]> = {
         sudden_death: [],
         lives: [],
@@ -238,6 +273,14 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
     </p>
   )
   const meLabel = t('common.you')
+  const deltaFor = (
+    tab: string,
+    username: string,
+    rank: number,
+  ): number | undefined => {
+    const prev = prevSnap[tab]?.[username]
+    return prev == null ? undefined : prev - rank
+  }
   const guides: Record<LeaderboardMode, string> = {
     daily: t('leaderboard.dailyGuide'),
     arcade: t('leaderboard.arcadeGuide'),
@@ -297,6 +340,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     name={r.username}
                     me={r.username === me}
                     meLabel={meLabel}
+                    delta={deltaFor('daily', r.username, r.rank)}
                     metrics={[
                       {
                         icon: Flame,
@@ -335,6 +379,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     name={r.username}
                     me={r.username === me}
                     meLabel={meLabel}
+                    delta={deltaFor('arcade', r.username, r.rank)}
                     metrics={[
                       {
                         icon: Trophy,
@@ -404,6 +449,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                       name={r.username}
                       me={r.username === me}
                       meLabel={meLabel}
+                      delta={deltaFor('run:' + runVariant, r.username, r.rank)}
                       metrics={[
                         {
                           icon: Swords,
@@ -437,6 +483,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     name={r.username}
                     me={r.username === me}
                     meLabel={meLabel}
+                    delta={deltaFor('trivia', r.username, r.rank)}
                     metrics={[
                       {
                         icon: Trophy,
@@ -476,6 +523,7 @@ export function LeaderboardDialog({ open, onOpenChange }: Props) {
                     name={r.username}
                     me={r.username === me}
                     meLabel={meLabel}
+                    delta={deltaFor('fastest', r.username, r.rank)}
                     metrics={[
                       {
                         icon: Timer,
