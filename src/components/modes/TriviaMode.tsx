@@ -28,16 +28,26 @@ import { SMASH_SYMBOL } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 
 const RUN_LENGTH = 10
+const DIFFICULTY_ES: Record<string, string> = {
+  Easy: 'Fácil',
+  Medium: 'Medio',
+  Hard: 'Difícil',
+}
 
 type Phase = 'idle' | 'starting' | 'playing' | 'finished'
 type QStatus = 'unanswered' | 'incorrect' | 'correct' | 'revealed' | 'skipped'
 type Session = { id: number; token: string; length: number }
-type Reveal = { correctOption: string; explanation: string | null; gained: number }
+type Reveal = {
+  correctOption: string
+  explanation: string | null
+  explanationEs: string | null
+  gained: number
+}
 type Option = { letter: string; text: string }
 type Summary = { score: number; length: number; correct: number }
 
 export function TriviaMode() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const user = useAuthStore((s) => s.user)
   const refreshStats = useGameStore((s) => s.refreshServerStats)
 
@@ -91,6 +101,7 @@ export function TriviaMode() {
         setReveal({
           correctOption: r.correct_option ?? letter,
           explanation: r.explanation ?? null,
+          explanationEs: r.explanation_es ?? null,
           gained: r.score ?? 0,
         })
       } else {
@@ -113,6 +124,7 @@ export function TriviaMode() {
       setReveal({
         correctOption: r.correct_option,
         explanation: r.explanation ?? null,
+        explanationEs: r.explanation_es ?? null,
         gained: 0,
       })
     } catch (e) {
@@ -162,16 +174,36 @@ export function TriviaMode() {
     }
   }
 
+  const es = lang === 'es'
   const options: Option[] = question
     ? (
         [
-          { letter: 'A', text: question.option_a },
-          { letter: 'B', text: question.option_b },
-          { letter: 'C', text: question.option_c },
-          { letter: 'D', text: question.option_d },
+          {
+            letter: 'A',
+            text: es && question.option_a_es ? question.option_a_es : question.option_a,
+          },
+          {
+            letter: 'B',
+            text: es && question.option_b_es ? question.option_b_es : question.option_b,
+          },
+          {
+            letter: 'C',
+            text: es && question.option_c_es ? question.option_c_es : question.option_c,
+          },
+          {
+            letter: 'D',
+            text: es && question.option_d_es ? question.option_d_es : question.option_d,
+          },
         ] as { letter: string; text: string | null }[]
       ).filter((o): o is Option => Boolean(o.text))
     : []
+  const explanationText = reveal
+    ? es && reveal.explanationEs
+      ? reveal.explanationEs
+      : reveal.explanation
+    : null
+  const questionText =
+    es && question?.question_es ? question.question_es : question?.question
 
   return (
     <section aria-labelledby="trivia-mode-heading">
@@ -246,14 +278,22 @@ export function TriviaMode() {
           </div>
 
           <div className="mb-3 flex flex-wrap gap-2">
-            {question.category && <Badge variant="muted">{question.category}</Badge>}
+            {question.category && (
+              <Badge variant="muted">
+                {es && question.category_es ? question.category_es : question.category}
+              </Badge>
+            )}
             {question.difficulty && (
-              <Badge variant="accent">{question.difficulty}</Badge>
+              <Badge variant="accent">
+                {es
+                  ? DIFFICULTY_ES[question.difficulty] ?? question.difficulty
+                  : question.difficulty}
+              </Badge>
             )}
           </div>
 
           <h3 className="font-display text-xl font-bold leading-snug">
-            {question.question}
+            {questionText}
           </h3>
 
           <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
@@ -361,9 +401,9 @@ export function TriviaMode() {
                   </span>
                 </p>
               )}
-              {reveal?.explanation && (
+              {explanationText && (
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {reveal.explanation}
+                  {explanationText}
                 </p>
               )}
             </div>

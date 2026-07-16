@@ -79,6 +79,12 @@ export const TriviaQuestionSchema = z.object({
   option_d: z.string().nullable(),
   category: z.string().nullable(),
   difficulty: z.string().nullable(),
+  question_es: z.string().nullable().optional(),
+  option_a_es: z.string().nullable().optional(),
+  option_b_es: z.string().nullable().optional(),
+  option_c_es: z.string().nullable().optional(),
+  option_d_es: z.string().nullable().optional(),
+  category_es: z.string().nullable().optional(),
 })
 export type TriviaQuestion = z.infer<typeof TriviaQuestionSchema>
 
@@ -113,6 +119,7 @@ export const TriviaSubmitSchema = z.object({
   can_next: z.boolean(),
   correct_option: z.string().optional(),
   explanation: z.string().nullable().optional(),
+  explanation_es: z.string().nullable().optional(),
   eliminated: z.array(z.string()).optional(),
 })
 export type TriviaSubmit = z.infer<typeof TriviaSubmitSchema>
@@ -122,6 +129,7 @@ export const TriviaRevealSchema = z.object({
   status: z.string(),
   correct_option: z.string(),
   explanation: z.string().nullable().optional(),
+  explanation_es: z.string().nullable().optional(),
   score: z.coerce.number(),
   can_next: z.boolean(),
 })
