@@ -371,7 +371,7 @@ export function TriviaMode() {
                 </Button>
               </>
             ) : (
-              <Button onClick={next} disabled={busy}>
+              <Button onClick={next} disabled={busy} variant="accent">
                 <RotateCcw /> {t('trivia.next')}
               </Button>
             )}
