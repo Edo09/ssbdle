@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { PartyPopper, RotateCcw, Share2, Skull } from 'lucide-react'
+import { LogIn, PartyPopper, RotateCcw, Share2, Skull } from 'lucide-react'
 import type { Character, GuessResult, Mode } from '@/types/game'
 import { MAX_GUESSES } from '@/types/game'
 import { useI18n, type TFn } from '@/i18n/useI18n'
@@ -8,6 +8,7 @@ import { VISIBLE_ATTRIBUTE_KEY_SET } from '@/lib/columns'
 import { Button } from '@/components/ui/button'
 import { CharacterAvatar } from '@/components/game/CharacterAvatar'
 import { SeriesIcon } from '@/components/game/SeriesIcon'
+import { AuthDialog } from '@/components/auth/AuthDialog'
 import { fighterRender, fullPortrait } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 import {
@@ -185,6 +186,7 @@ export function ResultBanner({
 }: Props) {
   const { t } = useI18n()
   const won = status === 'won'
+  const [authOpen, setAuthOpen] = useState(false)
 
   async function share() {
     const text = buildShare(guesses, mode, won, t)
@@ -260,9 +262,14 @@ export function ResultBanner({
       {answer ? (
         <AnswerReveal answer={answer} won={won} />
       ) : (
-        <p className="relative mt-3 text-sm text-muted-foreground">
-          {t('result.signInReveal')}
-        </p>
+        <div className="relative mt-4 rounded-lg border border-border bg-secondary/40 p-4">
+          <p className="text-sm text-muted-foreground">
+            {t('result.signInReveal')}
+          </p>
+          <Button onClick={() => setAuthOpen(true)} size="sm" className="mt-3">
+            <LogIn /> {t('common.signIn')}
+          </Button>
+        </div>
       )}
 
       {mode === 'daily' && !won && (
@@ -286,6 +293,8 @@ export function ResultBanner({
           </span>
         )}
       </div>
+
+      <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
     </div>
   )
 }
