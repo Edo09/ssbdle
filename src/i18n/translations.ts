@@ -17,6 +17,7 @@ const en = {
     daily: 'Daily',
     arcade: 'Arcade',
     trivia: 'Trivia',
+    help: 'How to play',
   },
   daily: { label: 'Daily fighter' },
   arcade: { label: 'Endless mode', tagline: 'a random fighter every round' },
@@ -84,6 +85,7 @@ const en = {
     countOne: 'guess',
     countMany: 'guesses',
     emptyHint: "Type a fighter's name to start guessing",
+    hintText: '💡 Attributes compared: Saga, Platform, Gender, Debut, Weight, and Release year.',
   },
   result: {
     won: 'Nailed it!',
@@ -166,6 +168,38 @@ const en = {
     gender: { Male: 'Male', Female: 'Female', Selectable: 'Selectable', Genderless: 'Genderless', Other: 'Other' },
     fighterType: { Starter: 'Starter', Unlockable: 'Unlockable', DLC: 'DLC' },
   },
+  help: {
+    title: 'How to Play',
+    intro: 'Guess the hidden Super Smash Bros. fighter in 8 attempts!',
+    rule1: 'Each guess must be a valid playable fighter from the roster.',
+    rule2: 'The color of the tiles will change to show how close your guess was to the hidden fighter.',
+    rule3: 'Arrows (↑ / ↓) tell you if the target property is higher or lower.',
+    columnsTitle: 'Fighter Attributes',
+    universe: 'Franchise/Series of the fighter (e.g. Mario, Pokémon, Zelda).',
+    platform: 'Original console platform of their debut game (e.g. NES, Switch).',
+    gender: 'Fighter gender (Male, Female, Selectable, Genderless).',
+    debut: 'The Super Smash Bros. game where they first appeared.',
+    weight: 'Fighter weight value. Up/down arrows show if target is heavier/lighter.',
+    year: 'Debut game release year. Up/down arrows show if target is newer/older.',
+    colorsTitle: 'Color Code Legend',
+    correct: 'Perfect match for this attribute.',
+    partial: 'Partial match (e.g. same console family, close debut year, etc.).',
+    wrong: 'No match for this attribute.',
+  },
+  taglines: {
+    daily: {
+      title: "Who's that Fighter?",
+      desc: 'Guess the hidden Super Smash Bros. fighter in 8 attempts!',
+    },
+    arcade: {
+      title: 'Fighter Gauntlet',
+      desc: "Different game modes, a random fighter every round. Guess them all!",
+    },
+    trivia: {
+      title: 'Smash Brain Academy',
+      desc: 'Prove you actually read the patch notes.',
+    },
+  },
   footer:
     'Fan-made · not affiliated with Nintendo. Fighter data from Super Smash Bros. Ultimate.',
 }
@@ -187,6 +221,7 @@ const es: typeof en = {
     daily: 'Diario',
     arcade: 'Arcade',
     trivia: 'Trivia',
+    help: 'Cómo jugar',
   },
   daily: { label: 'Luchador del día' },
   arcade: { label: 'Modo sin fin', tagline: 'un luchador aleatorio en cada ronda' },
@@ -254,6 +289,7 @@ const es: typeof en = {
     countOne: 'intento',
     countMany: 'intentos',
     emptyHint: 'Escribe el nombre de un luchador para empezar a adivinar',
+    hintText: '💡 Atributos que se comparan: Saga, Plataforma, Género, Debut, Peso y Año.',
   },
   result: {
     won: '¡Lo lograste!',
@@ -335,6 +371,38 @@ const es: typeof en = {
   values: {
     gender: { Male: 'Masculino', Female: 'Femenino', Selectable: 'Seleccionable', Genderless: 'Sin género', Other: 'Otro' },
     fighterType: { Starter: 'Inicial', Unlockable: 'Desbloqueable', DLC: 'DLC' },
+  },
+  help: {
+    title: 'Cómo jugar',
+    intro: '¡Adivina el luchador oculto de Super Smash Bros. en 8 intentos!',
+    rule1: 'Cada intento debe ser un luchador válido de la plantilla.',
+    rule2: 'El color de las casillas cambiará para mostrar qué tan cerca estuvo tu intento del luchador oculto.',
+    rule3: 'Las flechas (↑ / ↓) te indican si la propiedad buscada es mayor o menor.',
+    columnsTitle: 'Atributos del Luchador',
+    universe: 'Franchise/Saga de la que proviene el luchador (ej. Mario, Pokémon, Zelda).',
+    platform: 'Consola o plataforma original de su juego debut (ej. NES, Switch).',
+    gender: 'Género del luchador (Masculino, Femenino, Seleccionable, Sin género).',
+    debut: 'El juego de Super Smash Bros. en el que debutó.',
+    weight: 'Valor de peso. Las flechas indican si el objetivo es más pesado o ligero.',
+    year: 'Año de debut de su saga. Las flechas indican si el objetivo es más nuevo o antiguo.',
+    colorsTitle: 'Código de Colores',
+    correct: 'Coincidencia perfecta en este atributo.',
+    partial: 'Coincidencia parcial (ej. misma familia de consolas, año cercano, etc.).',
+    wrong: 'Sin coincidencia para este atributo.',
+  },
+  taglines: {
+    daily: {
+      title: '¿Quién es ese luchador?',
+      desc: 'Que tan bien conoces a los Personajes de Smash. ¡Uno al día!',
+    },
+    arcade: {
+      title: 'Desafío sin fin',
+      desc: 'Diferentes modos de juego, un luchador aleatorio en cada ronda. ¡Adivina!',
+    },
+    trivia: {
+      title: 'Smashología Avanzada',
+      desc: 'Demuestra que realmente te lees las notas del parche.',
+    },
   },
   footer:
     'Hecho por fans · sin afiliación con Nintendo. Datos de Super Smash Bros. Ultimate.',

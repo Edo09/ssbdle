@@ -1,6 +1,7 @@
 import {
   BrainCircuit,
   Flame,
+  HelpCircle,
   Infinity as InfinityIcon,
   Languages,
   LogOut,
@@ -27,6 +28,7 @@ interface Props {
   onModeChange: (m: Mode) => void
   onOpenAuth: () => void
   onOpenLeaderboard: () => void
+  onOpenHelp: () => void
 }
 
 export function Header({
@@ -34,6 +36,7 @@ export function Header({
   onModeChange,
   onOpenAuth,
   onOpenLeaderboard,
+  onOpenHelp,
 }: Props) {
   const { t, lang, setLang } = useI18n()
   const user = useAuthStore((s) => s.user)
@@ -85,6 +88,17 @@ export function Header({
             <Trophy className="size-4 transition-transform group-hover:scale-110" />
             <span className="hidden sm:inline">{t('leaderboard.title')}</span>
           </button>
+
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={onOpenHelp}
+            className="border-green/30 bg-green/10 text-green hover:bg-green/20"
+            aria-label={t('header.help')}
+            title={t('header.help')}
+          >
+            <HelpCircle />
+          </Button>
 
           <Button
             variant="secondary"

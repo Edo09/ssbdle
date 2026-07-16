@@ -189,6 +189,10 @@ function RunPlaying() {
         </Button>
       </div>
 
+      <p className="text-[11px] -mt-1 text-muted-foreground/60 px-1">
+        {t('board.hintText')}
+      </p>
+
       <div className="px-0.5 text-sm text-muted-foreground">
         <span className="font-display font-semibold text-foreground">
           {t('run.fighterN', { n: run.fighters + 1 })}

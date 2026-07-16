@@ -12,12 +12,14 @@ import { ArcadeMode } from '@/components/modes/ArcadeMode'
 import { TriviaMode } from '@/components/modes/TriviaMode'
 import { AuthDialog } from '@/components/auth/AuthDialog'
 import { LeaderboardDialog } from '@/components/leaderboard/LeaderboardDialog'
+import { HowToPlayDialog } from '@/components/game/HowToPlayDialog'
 
 function App() {
   const { t, lang } = useI18n()
   const [mode, setMode] = useState<Mode>('daily')
   const [authOpen, setAuthOpen] = useState(false)
   const [leaderboardOpen, setLeaderboardOpen] = useState(false)
+  const [helpOpen, setHelpOpen] = useState(false)
 
   const initAuth = useAuthStore((s) => s.init)
   const user = useAuthStore((s) => s.user)
@@ -44,6 +46,18 @@ function App() {
     document.documentElement.lang = lang
   }, [lang])
 
+  useEffect(() => {
+    const visited = localStorage.getItem('smashdle-tutorial-seen')
+    if (!visited) {
+      setHelpOpen(true)
+      localStorage.setItem('smashdle-tutorial-seen', 'true')
+    }
+
+    const handleOpenHelp = () => setHelpOpen(true)
+    window.addEventListener('open-help', handleOpenHelp)
+    return () => window.removeEventListener('open-help', handleOpenHelp)
+  }, [])
+
   return (
     <TooltipProvider delayDuration={200}>
       <div className="app-bg" aria-hidden />
@@ -53,9 +67,19 @@ function App() {
           onModeChange={setMode}
           onOpenAuth={() => setAuthOpen(true)}
           onOpenLeaderboard={() => setLeaderboardOpen(true)}
+          onOpenHelp={() => setHelpOpen(true)}
         />
 
         <main className="mx-auto w-full max-w-4xl flex-1 px-2.5 py-4 sm:px-4 sm:py-6">
+          <div className="mb-5 text-center">
+            <h2 className="font-display text-xl font-bold tracking-wide text-foreground sm:text-2xl">
+              {t(`taglines.${mode}.title`)}
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
+              {t(`taglines.${mode}.desc`)}
+            </p>
+          </div>
+
           <div className="hud-panel animate-fade-up rounded-2xl p-2.5 sm:p-6">
             <PageTransition pageKey={mode}>
               {mode === 'daily' && <DailyMode />}
@@ -75,6 +99,7 @@ function App() {
         open={leaderboardOpen}
         onOpenChange={setLeaderboardOpen}
       />
+      <HowToPlayDialog open={helpOpen} onOpenChange={setHelpOpen} />
       <Toaster />
     </TooltipProvider>
   )

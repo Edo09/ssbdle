@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Flag, Loader2 } from 'lucide-react'
+import { Flag, HelpCircle, Loader2 } from 'lucide-react'
 import type { BoardStatus } from '@/store/useGameStore'
 import type { Character, GuessResult, Mode } from '@/types/game'
 import { useI18n } from '@/i18n/useI18n'
@@ -65,6 +65,10 @@ export function GuessBoard({
             )}
           </div>
 
+          <p className="text-[11px] text-muted-foreground/60 px-1">
+            {t('board.hintText')}
+          </p>
+
           <div className="flex items-center justify-between px-0.5 text-sm">
             <span className="text-muted-foreground">
               {remaining != null ? (
@@ -106,6 +110,14 @@ export function GuessBoard({
           <p className="text-sm text-muted-foreground/70">
             {t('board.emptyHint')}
           </p>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-help'))}
+            className="mt-1 flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/5 px-3 py-1.5 text-xs font-semibold text-accent transition-all hover:bg-accent/15"
+          >
+            <HelpCircle className="size-3.5" />
+            {t('help.title')}
+          </button>
         </div>
       )}
 
